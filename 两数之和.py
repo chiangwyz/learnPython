@@ -1,3 +1,7 @@
+"""
+假设给定列表 [2,5,7,11]，目标值为9，
+该思路还是蛮有趣的，通过num_dict存储7需要的2的index，即num_dict[7] = 0
+"""
 class Solution:
     def twoSum(self, nums: list[int], target: int) -> list[int]:
         # Create a dictionary to store the difference between the target and the nums value
