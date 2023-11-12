@@ -4,6 +4,8 @@
 1. 如果第 k 大的元素在 big 数组中，递归地在 big 中寻找。
 2. 如果第 k 大的元素不在 big 中，但在 small 数组中，根据 k 和 small 数组的大小递归地在 small 中寻找。
 3. 如果第 k 大的元素不在 big 和 small 中，它必然在 equal 中，直接返回 pivot。
+
+这个思路真的很简洁，也容易理解。
 """
 import random
 
