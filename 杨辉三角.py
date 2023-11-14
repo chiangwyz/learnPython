@@ -1,3 +1,6 @@
+"""
+杨辉三角，经典的问题，需要注意细节处为两个for循环。
+"""
 class Solution:
     def generate(self, numRows: int) -> list[list[int]]:
         if numRows == 0:
