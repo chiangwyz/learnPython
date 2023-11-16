@@ -1,4 +1,12 @@
-# 创建两个指针，分别指向两个链表的头节点
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+        # 创建两个指针，分别指向两个链表的头节点
         pointerA, pointerB = headA, headB
         # 标记两个链表是否已经遍历到对方的尾部
         switchedA, switchedB = False, False
