@@ -7,28 +7,39 @@ self.num_to_index = {} 这个字典（也称为哈希表）在 RandomizedSet 类
 class RandomizedSet:
 
     def __init__(self):
+        # 用于存储元素的列表
         self.num_list = []
+        # 哈希表，键为元素，值为该元素在列表中的索引
         self.num_to_index = {}
 
     def insert(self, val: int) -> bool:
+        # 如果元素已存在，返回 False
         if val in self.num_to_index:
             return False
+        # 在哈希表中记录元素的索引
         self.num_to_index[val] = len(self.num_list)
+        # 在列表中添加元素
         self.num_list.append(val)
         return True
 
     def remove(self, val: int) -> bool:
+        # 如果元素不存在，返回 False
         if val not in self.num_to_index:
             return False
-        # Move the last element to the place idx of the element to delete
-        last_element = self.num_list[-1]
+        # 获取要删除元素的索引
         idx_to_remove = self.num_to_index[val]
+        # 获取列表中的最后一个元素
+        last_element = self.num_list[-1]
+        # 将最后一个元素移动到要删除元素的位置
         self.num_list[idx_to_remove] = last_element
+        # 更新哈希表中最后一个元素的索引
         self.num_to_index[last_element] = idx_to_remove
-        # Remove last element
+        # 从列表中移除最后一个元素
         self.num_list.pop()
+        # 从哈希表中删除要移除的元素
         del self.num_to_index[val]
         return True
 
     def getRandom(self) -> int:
+        # 随机返回列表中的一个元素
         return random.choice(self.num_list)
