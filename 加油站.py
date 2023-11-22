@@ -33,6 +33,8 @@ class Solution:
                 starting_station = i + 1  # 更新起始加油站为下一个加油站
                 curr_tank = 0  # 重置当前油箱为空
     
-        # 如果总油箱的油量大于等于0，则可以环绕一周，返回起始加油站索引
-        # 否则，返回-1表示无法环绕一周
-        return starting_station if total_tank >= 0 else -1
+        # 如果总油箱中的油足以走完全程，检查起始加油站是否有效
+        if total_tank >= 0:
+            return starting_station
+        else:
+            return -1
