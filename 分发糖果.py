@@ -9,21 +9,22 @@ n 个孩子站成一排。给你一个整数数组 ratings 表示每个孩子的
 class Solution:
     def candy(self, ratings: List[int]) -> int:
         n = len(ratings)
-        left = [0] * n
-        for i in range(n):
-            if i > 0 and ratings[i] > ratings[i - 1]:
-                left[i] = left[i - 1] + 1
-            else:
-                left[i] = 1
         
-        right = ret = 0
-        for i in range(n - 1, -1, -1):
-            if i < n - 1 and ratings[i] > ratings[i + 1]:
-                right += 1
-            else:
-                right = 1
-            ret += max(left[i], right)
+        # 初始化糖果数组，每个孩子至少有一颗糖果
+        candies = [1] * n
         
-        return ret
+        # 从左到右遍历，确保评分高的孩子获得更多的糖果
+        for i in range(1, n):
+            if ratings[i] > ratings[i - 1]:
+                candies[i] = candies[i - 1] + 1
+        
+        # 从右到左遍历，确保评分高的孩子获得更多的糖果
+        for i in range(n - 2, -1, -1):
+            if ratings[i] > ratings[i + 1]:
+                candies[i] = max(candies[i], candies[i + 1] + 1)
+        
+        # 计算总糖果数
+        return sum(candies)
+
 
 
