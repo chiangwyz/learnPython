@@ -1,8 +1,10 @@
 """
 这个题目错了好几次，细节是魔鬼。
 需要注意以下几个点：
+0. 对数组进行排序是关键
 1. third = length - 1 每次迭代都需要初始化
-2. if second > first + 1 and nums[second] == nums[second-1]:  second > first + 1，因为second只需要对第二次出现的值进行比较，与第一次出现的值不需要比较
+2. if second > first + 1 and nums[second] == nums[second-1]: 
+second > first + 1，因为second只需要对第二次出现的值进行比较，与第一次出现的值不需要比较
 """
 class Solution:
     # [a, b, c]
