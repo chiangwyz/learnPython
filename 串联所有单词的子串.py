@@ -1,3 +1,16 @@
+"""
+解决方案思路：
+
+计算单个单词的长度 word_length 和整个单词列表的总长度 substring_length。
+用一个计数器 words_counter 来计数 words 列表中每个单词出现的次数。
+遍历主字符串 s，对于每个可能的起始点，取出长度等于 substring_length 的子串。
+把这个子串进一步分割成多个长度等于 word_length 的小段，计数这些小段中每个单词出现的次数。
+如果分割后的单词计数与 words_counter 相同，说明这个子串是由单词列表 words 中的单词按某种顺序串联而成的，记录下这个子串的起始索引。
+为什么可以这样做：
+
+由于所有单词长度相同，我们可以通过分割检查子串是否包含了 words 列表中的所有单词。
+通过比较计数器，我们可以确保子串包含的单词与 words 列表中的单词完全一致，既没有多也没有少。
+"""
 from collections import Counter
 
 class Solution:
