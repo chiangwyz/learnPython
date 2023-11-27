@@ -1,1 +1,25 @@
+## 字典
 
+# 字典的 get 方法示例
+
+# 创建一个简单的字典
+simple_dict = {'a': 1, 'b': 2, 'c': 3}
+
+# 使用 get 方法
+# 如果键存在于字典中，返回其值
+a_value = simple_dict.get('a')  # 返回 1
+print('The value of key "a" is:', a_value)
+
+# 如果键不存在于字典中，可以返回一个默认值，这里是 0
+d_value = simple_dict.get('d', 0)  # 返回 0，因为 'd' 不存在
+print('The value of key "d" is:', d_value)
+
+# 如果键不存在于字典中，且没有指定默认值，返回 None
+d_value_no_default = simple_dict.get('d')  # 返回 None
+print('The value of key "d" without default is:', d_value_no_default)
+
+在上述代码示例中：
+
+当我们尝试获取键 'a' 的值时，由于 'a' 存在于字典中，get 方法返回了它的值 1。
+当我们尝试获取键 'd' 的值时，由于 'd' 不存在，get 方法返回了我们设定的默认值 0。
+如果没有指定默认值，尝试获取不存在的键 'd' 的值时，get 方法返回了 None。
