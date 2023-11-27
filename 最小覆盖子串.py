@@ -59,10 +59,10 @@ class Solution:
             # 移动右指针
             right += 1
             
-    if ans[0] == float("inf"):
-        return ""
-    else:
-        return s[ans[1]:ans[2] + 1]
+        if ans[0] == float("inf"):
+            return ""
+        else:
+            return s[ans[1]:ans[2] + 1]
 
 
 
