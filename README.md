@@ -1,5 +1,5 @@
 # learnPython
-This is a repository of learn python.
+This is a repository for learning python.
 
 ## 字典
 
