@@ -10,6 +10,12 @@
 
 由于所有单词长度相同，我们可以通过分割检查子串是否包含了 words 列表中的所有单词。
 通过比较计数器，我们可以确保子串包含的单词与 words 列表中的单词完全一致，既没有多也没有少。
+
+example_words = ["foo", "bar"]
+example_words_counter = Counter(example_words)
+print("example_words_counter = ", example_words_counter)
+# 输出结果
+example_words_counter =  Counter({'foo': 1, 'bar': 1})
 """
 from collections import Counter
 
