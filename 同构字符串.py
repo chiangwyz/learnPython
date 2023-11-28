@@ -25,6 +25,8 @@ class Solution:
         return True
 
 # 示例测试
+# 使用示例
+sol = Solution()
 print(sol.isIsomorphic("egg", "add"))  # 输出：True
 print(sol.isIsomorphic("foo", "bar"))  # 输出：False
 print(sol.isIsomorphic("paper", "title"))  # 输出：True
