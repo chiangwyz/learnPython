@@ -4,7 +4,8 @@ class Solution:
             return []
 
         ranges = []
-        start = end = nums[0]
+        start = nums[0]
+        end = nums[0]
 
         for n in nums[1:]:
             # 如果当前数字与前一个数字连续，则更新区间的结束数字
@@ -18,7 +19,8 @@ class Solution:
                     ranges.append("{}->{}".format(start, end))
 
                 # 更新起始区间
-                start = end = n
+                start = n
+                end = n
 
         # 添加最后一个区间
         if start == end:
