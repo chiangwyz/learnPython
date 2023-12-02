@@ -10,6 +10,11 @@
 移动两个链表的指针到下一个节点。
 遍历结束后，检查最后的进位，如果 carry 不为0，则在结果链表末尾添加一个节点，值为 carry。
 """
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
 
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
