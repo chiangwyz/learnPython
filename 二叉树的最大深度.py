@@ -7,7 +7,6 @@
 分别解决后再将结果合并。对于每一个节点，
 它的深度等于其左右子节点的最大深度加1。
 递归的终止条件是当遇到空节点时返回0，因为空节点不增加树的深度。
-"""
 
 # Definition for a binary tree node.
 class TreeNode:
@@ -15,6 +14,7 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+"""
 
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
