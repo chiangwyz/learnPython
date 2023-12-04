@@ -32,7 +32,7 @@ class Solution:
                 
             if len(big) + len(equal) < k:
                 # 第 k 大元素在 small 中，递归划分
-                return quickSelect(small, k - len(big) - len(equal))
+                return quick_select(small, k - len(big) - len(equal))
                 
             # 第 k 大元素在 equal 中，直接返回 pivot
             return pivot
