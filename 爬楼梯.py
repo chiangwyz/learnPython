@@ -1,19 +1,30 @@
 """
-爬楼梯这个题目很简单，也很经典了。斐波那契额数列，动态规划求解，但是偶然间发现这样的解法。简单易懂，时间复杂度还是O(1)，增加的只是空间复杂度。
+爬楼梯这个题目很简单，也很经典了。斐波那契额数列，动态规划求解。简单易懂，时间复杂度还是O(1)，增加的只是空间复杂度。
 """
+
 class Solution:
     def climbStairs(self, n: int) -> int:
         if n <= 2:
             return n
         
-        a = 1
-        b = 2
-        c = 0
-        for i in range(3, n + 1):
-            c = a + b
-            a = b
-            b = c
+        # 初始化dp数组
+        dp = [0] * (n + 1)
+        dp[1] = 1
+        dp[2] = 2
         
-        return c
+        # 动态规划填充dp数组
+        for i in range(3, n + 1):
+            dp[i] = dp[i - 1] + dp[i - 2]
+        
+        return dp[n]
 
-        return b
+# 创建Solution实例
+sol = Solution()
+
+# 测试案例
+n1 = 2
+n2 = 56
+result1 = sol.climbStairs(n1)
+result2 = sol.climbStairs(n2)
+
+
