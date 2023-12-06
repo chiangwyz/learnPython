@@ -15,16 +15,22 @@
 如果它等于 amount + 1，这意味着没有办法组成这个金额，我们返回 -1。
 否则，我们返回 dp[amount]，它代表了组成金额所需的最少硬币数量。
 """
-def coinChange(coins, amount):
-    # 初始化dp数组，初始值设为一个大数
-    dp = [amount + 1] * (amount + 1)
-    dp[0] = 0
-
-    # 遍历每个金额，尝试使用所有硬币
-    for i in range(1, amount + 1):
-        for coin in coins:
-            if i - coin >= 0:
-                dp[i] = min(dp[i], dp[i - coin] + 1)
-
-    # 如果dp[amount]还是初始值，表示无法组成该金额
-    return dp[amount] if dp[amount] != amount + 1 else -1
+class Solution:
+    def coinChange(self, coins: list[int], amount: int) -> int:
+        # 创建一个数组，用于存储每个金额所需的最少硬币数
+        dp = [amount + 1] * (amount + 1)
+        
+        # 基础情况：0金额需要0硬币
+        dp[0] = 0
+    
+        # 遍历每个金额
+        for a in range(1, amount + 1):
+            # 尝试每种硬币
+            for coin in coins:
+                # 如果硬币面额不超过当前金额
+                if coin <= a:
+                    # 更新数组中的最少硬币数
+                    dp[a] = min(dp[a], 1 + dp[a - coin])
+    
+        # 检查是否能组成金额，返回结果
+        return dp[amount] if dp[amount] != amount + 1 else -1
