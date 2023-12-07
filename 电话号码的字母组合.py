@@ -15,6 +15,31 @@
 输出：["a","b","c"]
 
 利用回溯算法逐步构建字母组合，通过递归调用来探索所有可能的路径，从而生成所有符合条件的字母组合。
+
+1. 函数定义:
+def backtrack(index, path):
+这个函数接受两个参数：index 表示当前正在处理的数字的索引，path 表示到目前为止形成的字母组合的路径。
+
+2. 终止条件:
+if index == len(digits):
+    combinations.append("".join(path))
+    return
+当 index 等于输入数字字符串的长度时，意味着已经处理完所有的数字。此时，path 包含了一种完整的字母组合，我们将它加入到结果列表中，并返回。
+
+3. 探索所有可能的字母:
+possible_letters = phone_map[digits[index]]
+for letter in possible_letters:
+    ...
+对于每个数字，我们查找它对应的所有可能的字母（例如，对于 '2'，可能的字母是 'a', 'b', 'c'）。然后，我们遍历这些字母。
+
+4. 递归地构建字母组合:
+path.append(letter)
+backtrack(index + 1, path)
+path.pop()
+对于当前数字的每个可能字母，我们将其添加到路径中，并递归地调用 backtrack 函数来处理下一个数字。
+这就是“深度优先搜索”的部分，我们深入探索每个可能的字母，直到达到字符串的末尾。
+一旦返回，我们移除路径中的最后一个字母（这就是“回溯”的部分），以便于探索同一层的其他可能字母。
+
 """
 
 from typing import List
