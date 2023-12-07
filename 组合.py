@@ -76,5 +76,3 @@ class Solution:
 sol = Solution()
 example1 = sol.combine(4, 2)
 example2 = sol.combine(1, 1)
-
-example1, example2
