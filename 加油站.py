@@ -27,8 +27,8 @@ class Solution:
             return -1
         
         n = len(gas)  # 加油站的数量
-        total_tank = 0  # 总油箱，用于计算总油量是否大于总耗油量
-        curr_tank = 0  # 当前油箱，用于计算从某个加油站出发是否能到达下一个加油站
+        total_tank = 0  # 总油量，用于计算总油量是否大于总耗油量
+        curr_tank = 0  # 当前油量，用于计算从某个加油站出发是否能到达下一个加油站
         starting_station = 0  # 起始加油站的索引
     
         # 遍历每个加油站
@@ -43,7 +43,7 @@ class Solution:
                 starting_station = i + 1  # 更新起始加油站为下一个加油站
                 curr_tank = 0  # 重置当前油箱为空
     
-        # 如果总油箱中的油足以走完全程，检查起始加油站是否有效
+        # 如果总油箱中的油足以走完全程，返回有效的起始加油站
         if total_tank >= 0:
             return starting_station
         else:
