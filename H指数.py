@@ -15,3 +15,16 @@ class Solution:
 
         return h
 
+class Solution:
+    def hIndex(self, citations: List[int]) -> int:
+        sorted_citations = sorted(citations, reverse=True)
+
+        h = 0
+
+        for element in sorted_citations:
+            if element > h:
+                h += 1
+            else:
+                break
+        
+        return h
