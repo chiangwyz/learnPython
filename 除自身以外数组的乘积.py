@@ -1,28 +1,31 @@
 """
 该题目非常有趣，有几个细节需要注意，
 1. 初始化应该为[0]
-2. L[0] = 1 \ R[length - 1] = 1
+2. 计算右乘积，range的范围和数组的下标。
 """
-def productExceptSelf(nums: list[int]) -> list[int]:
-    length = len(nums)
-    # L 和 R 分别表示左侧所有元素的乘积和右侧所有元素的乘积
-    L, R, answer = [0]*length, [0]*length, [0]*length
+class Solution:
+    def productExceptSelf(self, nums: list[int]) -> list[int]:
+        length = len(nums)  # 数组长度
 
-    # L[i] 为索引 i 左侧所有元素的乘积
-    L[0] = 1
-    for i in range(1, length):
-        L[i] = nums[i - 1] * L[i - 1]
+        # 初始化左乘积、右乘积和结果数组
+        left, right, answer = [0]*length, [0]*length, [0]*length
 
-    # R[i] 为索引 i 右侧所有元素的乘积
-    R[length - 1] = 1
-    for i in reversed(range(length - 1)):
-        R[i] = nums[i + 1] * R[i + 1]
+        # 计算左乘积
+        left[0] = 1  # 第一个元素左边没有其他元素，所以乘积为1
+        for i in range(1, length):
+            left[i] = left[i-1] * nums[i-1]
 
-    # 对于索引 i，除 nums[i] 之外其余各元素的乘积就是 L[i] 和 R[i] 的乘积
-    for i in range(length):
-        answer[i] = L[i] * R[i]
+        # 计算右乘积
+        right[length-1] = 1  # 最后一个元素右边没有其他元素，所以乘积为1
+        for i in range(length-2, -1, -1):
+            right[i] = right[i+1] * nums[i+1]
 
-    return answer
+        # 计算最终结果
+        for i in range(length):
+            answer[i] = left[i] * right[i]
+
+        return answer
+
 
 # 示例测试
 print(productExceptSelf([1,2,3,4]))  # 输出 [24,12,8,6]
