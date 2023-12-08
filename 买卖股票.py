@@ -1,3 +1,9 @@
+"""
+两个知识点：
+1. 需要在循环中更新最低价格
+2. 若没有更新价格，则每次检查是否超过最大利润
+
+"""
 class Solution:
     def maxProfit(self, prices: list[int]) -> int:
         # 如果数组为空或只有一个价格数据，无法进行交易
