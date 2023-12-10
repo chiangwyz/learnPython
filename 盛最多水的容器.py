@@ -9,22 +9,20 @@
 """
 class Solution:
     def maxArea(self, height: list[int]) -> int:
-        current_water = 0
-        max_water = 0
-        left = 0
-        right = len(height) - 1
-
-        while left < right:
-            current_water = (right - left) * min(height[right], height[left])
-
+        max_water = 0  # 初始化最大水量为0
+        left, right = 0, len(height) - 1  # 设置双指针在数组的两端
+        
+        while left < right:  # 当左指针小于右指针时
+            # 计算当前的水量，由较短的边界决定
+            current_water = (right - left) * min(height[left], height[right])
+            # 更新最大水量
             max_water = max(max_water, current_water)
-
+            
+            # 移动较短边界的指针，以寻找可能的更大容器
             if height[left] < height[right]:
                 left += 1
-            elif height[left] > height[right]:
-                right -= 1
             else:
-                left += 1
                 right -= 1
-
-        return max_water
+        
+        return max_water  # 返回最大水量
+                
