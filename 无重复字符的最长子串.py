@@ -1,4 +1,15 @@
+"""
+1. 哈希映射（char_index_map）：存储每个字符遇到的最新索引。
+它有助于检查一个字符是否已经在当前子串中，并相应地更新滑动窗口的起始索引。
 
+2. 滑动窗口（left 和 right 变量）：代表当前正在考虑的子串。left 变量标记窗口的开始，而 right 遍历整个字符串。
+
+3. 更新窗口和计算长度：
+    循环遍历字符串，对于每个字符，检查它是否已在当前窗口中（char_index_map[char] >= left）。
+    如果是，窗口的左边界移动到这个字符的最后一次出现的右侧，以将其从当前窗口中排除。
+    在 char_index_map 中更新每个字符的索引。
+    比较当前窗口的长度（right - left + 1）与迄今为止看到的最大长度，并相应地更新最大值。
+"""
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         char_index_map = {}  # 字符及其索引位置的映射
