@@ -28,7 +28,6 @@ class Solution:
         else:
             ranges.append("{}->{}".format(start, end))
 
-
         return ranges
 
 # 示例测试
