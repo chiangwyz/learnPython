@@ -13,7 +13,6 @@ magazine 中的每个字符只能在 ransomNote 中使用一次。
 """
 
 class Solution:
-    # Python 函数来判断 ransomNote 是否可以由 magazine 中的字符构成
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
       # 创建一个字典来保存 magazine 中每个字符的计数
       magazine_counts = {}
