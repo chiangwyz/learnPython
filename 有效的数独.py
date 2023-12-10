@@ -63,5 +63,6 @@ board_example = [
 ]
 
 # 检查示例数独棋盘是否有效
-isValid = isValidSudoku(board_example)
+solution = Solution()
+isValid = solution.isValidSudoku(board_example)
 print(isValid)  # 输出：True
