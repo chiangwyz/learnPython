@@ -25,7 +25,7 @@ class Solution:
         root = TreeNode(postorder[-1])
         root_index = inorder.index(postorder.pop())  # 找到根节点在中序遍历中的位置
 
-        # 首先构造右子树，然后是左子树
+        # 首先构造右子树，然后是左子树，必须先构造右子树，才可以构造左子树
         root.right = self.buildTree(inorder[root_index + 1:], postorder)
         root.left = self.buildTree(inorder[:root_index], postorder)
 
