@@ -4,6 +4,7 @@ KMP算法是一种用于字符串搜索的有效算法，其核心思想是当�
 通过部分匹配表（也称为前缀函数或失败函数）跳过尽可能多的不必要的比较。
 
 拓展知识：
+Longest Prefix which is also Suffix
 “相同的前后缀”这个概念是理解KMP算法中部分匹配表的关键。
 在这里，我们所说的“前缀”和“后缀”指的是一个字符串的开头部分和结尾部分。
 
@@ -38,6 +39,15 @@ class Solution:
         if not needle:
             return 0
 
+        """
+        build_lps 方法
+        这个方法用于构建所谓的“最长相同前后缀”（Longest Prefix which is also Suffix，简称LPS）数组。
+        这个数组是KMP算法的核心，它存储了在needle中每个位置不匹配时我们应该跳转到哪个位置。
+
+        lps数组初始化为和needle一样长的0数组。
+        length变量用来追踪当前最长的相同前后缀的长度。
+        通过比较needle的字符来更新lps数组。
+        """
         # 构建部分匹配表
         def build_lps(needle):
             lps = [0] * len(needle)  # 初始化部分匹配表
@@ -56,6 +66,15 @@ class Solution:
                         i += 1
             return lps
 
+        """
+        这个方法实现了KMP算法的主体。
+
+        i和j分别是haystack和needle的索引。
+        如果haystack[i]和needle[j]匹配，那么两个索引都往前移动。
+        如果j和needle的长度相同，表示找到了一个匹配项，返回i - j（匹配的起始位置）。
+        如果haystack[i]和needle[j]不匹配，那么根据lps[j - 1]来决定j的下一个位置。如果j为0，则i前进。
+        如果整个haystack都搜索完毕还没有找到匹配项，则返回-1。
+        """
         # 实现KMP算法
         def KMP_search(haystack, needle):
             lps = build_lps(needle)
