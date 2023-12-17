@@ -12,9 +12,12 @@
 """
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        char_index_map = {}  # 字符及其索引位置的映射
-        left = 0  # 滑动窗口的左边界
-        max_length = 0  # 最长无重复字符子串的长度
+        # 字符及其索引位置的映射
+        char_index_map = {}  
+        # 滑动窗口的左边界
+        left = 0  
+        # 最长无重复字符子串的长度
+        max_length = 0 
 
         for right, char in enumerate(s):
             # 如果字符已存在于窗口中，则更新左边界
