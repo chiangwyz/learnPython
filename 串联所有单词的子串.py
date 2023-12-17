@@ -20,22 +20,29 @@ example_words_counter =  Counter({'foo': 1, 'bar': 1})
 from collections import Counter
 
 class Solution:
-    def findSubstring(self, s: str, words: list[str]) -> list[int]:
+    def findSubstring(self, s: str, words: List[str]) -> List[int]:
         if not s or not words:
             return []
         
+        # 单词的长度（假设所有单词长度相同）
         word_length = len(words[0])
+        # 单词的数量
         word_count = len(words)
+        # 所有单词组成的字符串的总长度
         substring_length = word_length * word_count
+        # 对单词列表进行计数
         words_counter = Counter(words)
+        # 存储结果的列表
         result = []
 
-        # 遍历字符串，以每个可能的起始点开始检查
+        # 遍历字符串，检查每个可能的起始点
         for i in range(len(s) - substring_length + 1):
-            substring = s[i:i + substring_length]  # 取出长度等于所有单词长度总和的子串
+            # 获取当前起始点的子串
+            substring = s[i:i + substring_length]
+            # 用于记录已见单词的列表
             seen_words = []
 
-            # 将子串分割为多个单词长度的小段，并计数
+            # 遍历子串，每次取出一个单词的长度
             for j in range(0, substring_length, word_length):
                 word = substring[j:j + word_length]
                 seen_words.append(word)
@@ -45,6 +52,7 @@ class Solution:
                 result.append(i)
 
         return result
+
 
 # 示例解释
 sol = Solution()
