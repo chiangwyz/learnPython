@@ -3,15 +3,19 @@ class Solution:
         n = len(nums)
         left = 0
         sum = 0
-        min_length = float('inf')  # 使用无穷大初始化最小长度
+        # 使用无穷大初始化最小长度
+        min_length = float('inf')  
 
         # 遍历数组
         for right in range(n):
-            sum += nums[right]  # 累加子数组的和
+            # 累加子数组的和
+            sum += nums[right]
             # 当和大于等于target时，尝试缩小子数组的长度
             while sum >= target:
-                min_length = min(min_length, right - left + 1)  # 更新最小长度
-                sum -= nums[left]  # 移动左指针，减小子数组的和
+                # 更新最小长度
+                min_length = min(min_length, right - left + 1)
+                # 移动左指针，减小子数组的和
+                sum -= nums[left]  
                 left += 1
         
         # 如果min_length没有被更新过，说明没有找到符合条件的子数组
