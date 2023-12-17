@@ -9,7 +9,8 @@
 """
 class Solution:
     def threeSum(self, nums: list[int]) -> list[list[int]]:
-        nums.sort()  # 首先对数组进行排序
+        # 首先对数组进行排序
+        nums.sort()
         n = len(nums)
         result = []
 
