@@ -24,7 +24,7 @@ class Solution:
         if not s or not words:
             return []
         
-        # 单词的长度（假设所有单词长度相同）
+        # 单词的长度
         word_length = len(words[0])
         # 单词的数量
         word_count = len(words)
