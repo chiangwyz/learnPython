@@ -12,13 +12,13 @@
 """
 
 class Solution:
-    def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
-        # Create a default dictionary to hold lists for each sorted string
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        # 使用 defaultdict 创建一个字典，字典的值是列表
         d = defaultdict(list)
-        # Iterate over each string
+        # 遍历字符串列表中的每个字符串
         for s in strs:
-            # Sort the characters of the string and use the sorted string as the key
-            # Add the original string to the corresponding list
+            # 对字符串的字符进行排序，并将排序后的字符串作为键
+            # 将原始字符串添加到对应的列表中
             d[''.join(sorted(s))].append(s)
-        # Return a collection of all the lists in the dictionary, which are the grouped anagrams
+        # 返回字典中所有列表的集合，这些列表就是分组好的字谜
         return list(d.values())
