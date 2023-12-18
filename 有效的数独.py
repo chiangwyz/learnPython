@@ -22,7 +22,7 @@ j // 3 是 7 // 3，等于 2，表示它在第三组列。
 
 # Python 函数来验证数独是否有效
 class Solution:
-    def isValidSudoku(self, board: list[list[str]]) -> bool:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
         # 为数独的每一行、每一列和每个3x3宫初始化字典
         rows = [{} for _ in range(9)]
         columns = [{} for _ in range(9)]
