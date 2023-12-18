@@ -1,6 +1,7 @@
 """
 非常巧妙的解法，
-这也是使用Python的优势
+这也是使用Python的优势。
+先转置，再反转每一行。
 """
 class Solution:
     def rotate(self, matrix: list[list[int]]) -> None:
