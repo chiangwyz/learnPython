@@ -43,11 +43,3 @@ class Solution:
         max_gain(root)
 
         return self.max_sum
-
-
-
-
-
-
-
-
