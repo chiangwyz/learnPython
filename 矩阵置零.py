@@ -17,9 +17,13 @@ class Solution:
         # 第一次遍历，使用矩阵的第一行和第一列来标记对应的行和列是否需要置0
         for i in range(rows):
             if matrix[i][0] == 0:
-                is_col = True  # 第一列需要置0
-            for j in range(1, cols):  # 从第二列开始
-                if matrix[i][j] == 0:  # 如果发现0
+                # 第一列需要置0
+                is_col = True  
+            
+            # 从第二列开始
+            for j in range(1, cols):  
+                 # 如果发现0
+                if matrix[i][j] == 0: 
                     # 标记在第一行和第一列
                     matrix[i][0] = 0
                     matrix[0][j] = 0
