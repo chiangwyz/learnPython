@@ -1,12 +1,11 @@
-
 class Solution:
     def gameOfLife(self, board: List[List[int]]) -> None:
-
         # 复制一份board作为更新的基础
         copy_board = [row[:] for row in board]
         
         # 获取板的行数和列数
-        rows, cols = len(board), len(board[0])
+        rows = len(board)
+        cols = len(board[0])
         
         # 遍历板上的每一个格子
         for row in range(rows):
