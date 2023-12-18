@@ -28,7 +28,7 @@ return n == 1
 
 class Solution:
     def isHappy(self, n: int) -> bool:
-        def get_next(number):
+        def get_next(number: int) -> int:
             # 计算下一个数字的平方和
             total_sum = 0
             while number > 0:
