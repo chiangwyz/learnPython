@@ -1,7 +1,6 @@
 """
 def get_next(number):
 这是一个定义在 isHappy 方法内部的辅助函数，用于计算给定数字每位数平方和。
-def 关键字用于定义函数。
 
 while number > 0:
 这个循环用于处理数字的每一位，直到数字变为 0。
@@ -30,14 +29,15 @@ return n == 1
 class Solution:
     def isHappy(self, n: int) -> bool:
         def get_next(number):
-            """计算下一个数字的平方和"""
+            # 计算下一个数字的平方和
             total_sum = 0
             while number > 0:
                 number, digit = divmod(number, 10)
                 total_sum += digit ** 2
             return total_sum
 
-        seen = set()  # 存储所有已经出现过的平方和
+        # 存储所有已经出现过的平方和
+        seen = set()  
         while n != 1 and n not in seen:
             seen.add(n)
             n = get_next(n)
