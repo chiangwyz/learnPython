@@ -14,6 +14,30 @@
 3. 最后，dp[m][n] 就是将 word1 转换成 word2 所需的最少操作数。
 """
 
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        m, n = len(word1), len(word2)
+        # 初始化dp数组
+        dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+        # 初始化边界条件
+        for i in range(m + 1):
+            dp[i][0] = i
+        for j in range(n + 1):
+            dp[0][j] = j
+
+        # 动态规划计算所有dp值
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                if word1[i - 1] == word2[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1]
+                else:
+                    dp[i][j] = min(dp[i - 1][j],    # 删除操作
+                                   dp[i][j - 1],    # 插入操作
+                                   dp[i - 1][j - 1] # 替换操作
+                                  ) + 1
+        return dp[m][n]
+
 
 
 
