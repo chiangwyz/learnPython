@@ -23,8 +23,9 @@ class Solution:
 
         # 初始化 dp 数组
         dp = [[False] * (len(s2) + 1) for _ in range(len(s1) + 1)]
-        dp[0][0] = True  # 两个空字符串可以组成一个空字符串
-
+        # 两个空字符串可以组成一个空字符串
+        dp[0][0] = True  
+        
         # 初始化 dp 的第一列
         for i in range(1, len(s1) + 1):
             if dp[i - 1][0] and s1[i - 1] == s3[i - 1]:
