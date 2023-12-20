@@ -32,7 +32,10 @@ class Solution:
             else:
                 dp[i][0] = False
 
-        
+        """
+        dp[0][j - 1] 是否为 True：这表示 s2 的前 j-1 个字符是否能单独交错组成 s3 的前 j-1 个字符。
+        s2[j - 1] 是否等于 s3[j - 1]：这检查 s2 的第 j 个字符是否与 s3 的第 j 个字符相同。
+        """
         # 初始化 dp 的第一行
         for j in range(1, len(s2) + 1):
             if dp[0][j - 1] and s2[j - 1] == s3[j - 1]:
