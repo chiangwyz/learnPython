@@ -28,6 +28,7 @@ class Solution:
                     else:
                         # 否则，取决于它的左边、上边和左上角的最小值
                         dp[i][j] = min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1
+                    # 更新最长边长
                     max_side = max(max_side, dp[i][j])
         
         # 返回最大正方形的面积
