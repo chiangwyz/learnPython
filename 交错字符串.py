@@ -35,7 +35,11 @@ class Solution:
         
         # 初始化 dp 的第一行
         for j in range(1, len(s2) + 1):
-            dp[0][j] = dp[0][j - 1] and s2[j - 1] == s3[j - 1]
+            if dp[0][j - 1] and s2[j - 1] == s3[j - 1]:
+                dp[0][j] = True
+            else:
+                dp[0][j] = False
+
 
         # 填充 dp 数组的其余部分
         for i in range(1, len(s1) + 1):
