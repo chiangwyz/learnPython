@@ -8,7 +8,8 @@
 class Solution:
     def hasCycle(self, head: ListNode) -> bool:
         # 初始化快慢指针，初始都指向头节点
-        slow = fast = head
+        slow = head
+        fast = head
 
         # 遍历链表
         while fast and fast.next:
