@@ -20,23 +20,34 @@
 
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        dummy = ListNode(0)  # 创建一个哑节点，用于简化边界情况的处理
-        current = dummy  # 当前节点
-        carry = 0  # 进位
+        # 创建一个哑节点，用于简化边界情况的处理
+        dummy = ListNode(0)  
+        # 当前节点
+        current = dummy
+        # 进位
+        carry = 0 
 
         while l1 or l2 or carry:
             val1 = l1.val if l1 else 0
             val2 = l2.val if l2 else 0
             sum_val = val1 + val2 + carry
 
-            carry = sum_val // 10  # 计算新的进位
-            sum_val = sum_val % 10  # 当前位的值
-            current.next = ListNode(sum_val)  # 创建新节点并将其添加到结果链表
+            # 计算新的进位
+            carry = sum_val // 10  
+            # 当前位的值
+            sum_val = sum_val % 10  
+            # 创建新节点并将其添加到结果链表
+            current.next = ListNode(sum_val)  
 
-            current = current.next  # 移动当前节点指针
+             # 移动当前节点指针
+            current = current.next 
+
+            # 移动l1指针
             if l1:
-                l1 = l1.next  # 移动l1指针
+                l1 = l1.next  
+            # 移动l2指针
             if l2:
-                l2 = l2.next  # 移动l2指针
+                l2 = l2.next  
 
-        return dummy.next  # 返回哑节点的下一个节点，即结果链表的头节点
+        # 返回哑节点的下一个节点，即结果链表的头节点
+        return dummy.next  
