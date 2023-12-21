@@ -1,35 +1,42 @@
 """
-假设 company 即将开始 IPO 。为了以更高的价格将股票卖给风险投资公司，company 希望在 IPO 之前开展一些项目以增加其资本。 
-由于资源有限，它只能在 IPO 之前完成最多 k 个不同的项目。帮助 company 设计完成最多 k 个不同项目后得到最大总资本的方式。
+创建并维护最小堆 minCapitalHeap 时，堆是根据元组中的第一个元素，即 capital[i]，来进行排序的。
+这是因为 Python 的 heapq 模块默认将元组的第一个元素作为排序的关键字。
 
-给你 n 个项目。对于每个项目 i ，它都有一个纯利润 profits[i] ，和启动该项目需要的最小资本 capital[i] 。
-最初，你的资本为 w 。当你完成一个项目时，你将获得纯利润，且利润将被添加到你的总资本中。
-总而言之，从给定项目中选择 最多 k 个不同项目的列表，以 最大化最终资本 ，并输出最终可获得的最多资本。
+在这个特定的场景中：
 
-答案保证在 32 位有符号整数范围内。
-
-示例 1：
-输入：k = 2, w = 0, profits = [1,2,3], capital = [0,1,1]
-输出：4
-解释：
-由于你的初始资本为 0，你仅可以从 0 号项目开始。
-在完成后，你将获得 1 的利润，你的总资本将变为 1。
-此时你可以选择开始 1 号或 2 号项目。
-由于你最多可以选择两个项目，所以你需要完成 2 号项目以获得最大的资本。
-因此，输出最后最大化的资本，为 0 + 1 + 3 = 4。
-
-示例 2：
-输入：k = 3, w = 0, profits = [1,2,3], capital = [0,1,2]
-输出：6
- 
-提示：
-1 <= k <= 105
-0 <= w <= 109
-n == profits.length
-n == capital.length
-1 <= n <= 105
-0 <= profits[i] <= 104
-0 <= capital[i] <= 109
+每个元素都是一个形如 (capital[i], profits[i]) 的元组。
+heapq 将这些元组按照它们的 capital[i] 值（即启动项目所需的资本）进行排序。
+最小堆保证了堆顶（即 minCapitalHeap[0]）总是所需资本最小的项目。
+这个排序方式是自动的，基于 Python 元组比较的规则：首先比较元组的第一个元素，如果相同，则比较第二个元素，依此类推。
+由于在这种情况下，我们只关心每个项目的启动资本，因此元组的第一个元素（capital[i]）成为排序的主要依据。
 """
+
+import heapq
+
+class Solution:
+    def findMaximizedCapital(self, k: int, w: int, profits: List[int], capital: List[int]) -> int:
+        # 初始化两个堆
+        minCapitalHeap = []
+        maxProfitHeap = []
+
+        # 将所有项目加入到最小堆 minCapitalHeap
+        for i in range(len(profits)):
+            heapq.heappush(minCapitalHeap, (capital[i], profits[i]))
+
+        # 进行 k 次投资
+        for _ in range(k):
+            # 将所有当前资本 w 能启动的项目加入到最大堆 maxProfitHeap
+            while minCapitalHeap and minCapitalHeap[0][0] <= w:
+                capital, profit = heapq.heappop(minCapitalHeap)
+                heapq.heappush(maxProfitHeap, -profit)
+
+            # 如果没有可投资的项目，就结束循环
+            if not maxProfitHeap:
+                break
+
+            # 选择利润最大的项目进行投资，并更新资本
+            w -= heapq.heappop(maxProfitHeap)
+
+        return w
 
 
