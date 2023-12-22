@@ -12,6 +12,12 @@ class Solution:
             for col in range(cols):
                 # 计算周围活细胞的数量
                 live_neighbors = 0
+                """
+                (i, j) != (row, col) 这样的语句是用来比较两个元组是否不相等。
+                这里，(i, j) 和 (row, col) 都是元组，元组是 Python 中的一种数据结构，用来存储有序的元素集合。
+                这个比较是逐元素进行的。首先比较元组中的第一个元素（i 和 row），如果它们不相等，那么整个元组就被认为是不相等的。
+                如果第一个元素相等，则比较第二个元素（j 和 col）。只有当两个元组中的所有对应元素都相等时，这两个元组才被认为是相等的。
+                """
                 for i in range(max(0, row-1), min(rows, row+2)):
                     for j in range(max(0, col-1), min(cols, col+2)):
                         if (i, j) != (row, col) and copy_board[i][j] == 1:
