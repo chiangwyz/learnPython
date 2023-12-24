@@ -1,4 +1,6 @@
 """
+二叉树的 最大深度 是指从根节点到最远叶子节点的最长路径上的节点数。
+
 为了计算二叉树的最大深度，我们可以使用递归的方法。
 基本思想是比较左子树和右子树的深度，取其中较大的一个，
 并加上当前节点自身的深度。这里是相应的实现代码和注释：
@@ -7,6 +9,7 @@
 分别解决后再将结果合并。对于每一个节点，
 它的深度等于其左右子节点的最大深度加1。
 递归的终止条件是当遇到空节点时返回0，因为空节点不增加树的深度。
+"""
 
 # Definition for a binary tree node.
 class TreeNode:
@@ -14,7 +17,6 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-"""
 
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
