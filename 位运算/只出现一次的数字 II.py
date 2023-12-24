@@ -11,7 +11,8 @@
 """
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
-        count = {}  # 初始化哈希表
+        # 初始化哈希表
+        count = {}  
 
         # 遍历数组，更新哈希表中的元素出现次数
         for num in nums:
