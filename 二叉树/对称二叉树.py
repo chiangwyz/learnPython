@@ -10,18 +10,23 @@
 
 class Solution:
     def isSymmetric(self, root: TreeNode) -> bool:
+        # 空树被视为对称的
         if not root:
-            return True  # 空树被视为对称的
-        
-        return self.isMirror(root.left, root.right)  # 检查左右子树是否为镜像
+            return True  
+
+        # 检查左右子树是否为镜像
+        return self.isMirror(root.left, root.right)  
 
     def isMirror(self, left: TreeNode, right: TreeNode) -> bool:
+        # 两个空节点视为对称
         if not left and not right:
-            return True  # 两个空节点视为对称
+            return True  
+        # 一个节点为空，另一个不为空，不对称
         if not left or not right:
-            return False  # 一个节点为空，另一个不为空，不对称
+            return False  
+        # 两个节点的值不同，不对称
         if left.val != right.val:
-            return False  # 两个节点的值不同，不对称
+            return False  
 
         # 递归检查当前节点的左右子节点是否为镜像
         return self.isMirror(left.left, right.right) and self.isMirror(left.right, right.left)
