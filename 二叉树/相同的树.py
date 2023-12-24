@@ -5,6 +5,7 @@
 接着，如果两棵树的根节点的值不同，那么树也不相同。
 最后，如果根节点的值相同，我们递归地比较左子树和右子树。
 只有在所有对应的左子树和右子树都相同的情况下，这两棵树才被认为是相同的。
+"""
 
 # Definition for a binary tree node.
 class TreeNode:
@@ -12,7 +13,6 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-"""
 
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
