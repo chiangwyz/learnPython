@@ -9,10 +9,18 @@
 这个过程从根节点开始，并遍历整个树，确保每个节点的左右子树都被交换。
 """
 
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
 class Solution:
     def invertTree(self, root: TreeNode) -> TreeNode:
+        # 当前节点为空时直接返回
         if not root:
-            return None  # 当前节点为空时直接返回
+            return None  
         
         # 交换当前节点的左右子节点
         root.left, root.right = root.right, root.left
