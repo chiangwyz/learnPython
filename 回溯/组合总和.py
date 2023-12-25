@@ -15,7 +15,7 @@
 
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        def backtrack(start, target, path):
+        def backtrack(start: int, target: int, path: List[int]):
             # 如果目标值为0，则找到了一个有效的组合
             if target == 0:
                 result.append(path.copy())
