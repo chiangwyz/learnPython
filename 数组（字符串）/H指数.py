@@ -3,7 +3,7 @@
 """
 
 class Solution:
-    def hIndex(self, citations: list[int]) -> int:
+    def hIndex(self, citations: List[int]) -> int:
         sorted_citation = sorted(citations, reverse=True)
 
         i = 0
