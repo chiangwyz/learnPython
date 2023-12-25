@@ -17,3 +17,4 @@ class Solution:
 
         # 如果nums2还有剩余，直接复制到nums1的前面，nums1剩余的部分不需要操作，因为它们已经在正确的位置
         nums1[:n] = nums2[:n]
+        
