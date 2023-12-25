@@ -23,9 +23,11 @@
 """
 
 class Solution:
-    def majorityElement(self, nums: list[int]) -> int:
-        count = 0  # 初始化计数器
-        candidate = None  # 初始化候选多数元素为None
+    def majorityElement(self, nums: List[int]) -> int:
+        # 初始化计数器
+        count = 0  
+        # 初始化候选多数元素为None
+        candidate = None  
 
         # 遍历每个元素
         for num in nums:
