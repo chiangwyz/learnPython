@@ -14,16 +14,22 @@ for循环内部：
 """
 class Solution:
     def canJump(self, nums: list[int]) -> bool:
-        max_reach = 0  # 初始化最远到达位置为0
+        # 初始化最远到达位置为0
+        max_reach = 0  
 
-        for i in range(len(nums)):  # 遍历数组中的每个元素
-            if i > max_reach:  # 如果当前位置超过了能达到的最远位置
-                return False  # 无法到达，返回False
+        # 遍历数组中的每个元素
+        for i in range(len(nums)): 
+            # 如果当前位置超过了能达到的最远位置
+            if i > max_reach:  
+                # 无法到达，返回False
+                return False  
 
-            max_reach = max(max_reach, i + nums[i])  # 更新最远到达位置
+            # 更新最远到达位置
+            max_reach = max(max_reach, i + nums[i])  
 
-            if max_reach >= len(nums) - 1:  # 如果能达到或超过数组的最后一个位置
-                return True  # 可以到达终点，返回True
+            # 如果能达到或超过数组的最后一个位置，可以到达终点，返回True
+            if max_reach >= len(nums) - 1: 
+                return True  
 
-        return False  # 循环结束，仍未到达终点，返回False
-
+        # 循环结束，仍未到达终点，返回False
+        return False  
