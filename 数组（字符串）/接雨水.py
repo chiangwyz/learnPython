@@ -1,9 +1,9 @@
 """
-该问题挺有意思的，其核心点位将左右两边的最大值分开来更新
+该问题挺有意思的，题目关键点为将左右两边的最大值分开来更新
 if height[left] >= left_max: 当当前值超过最大值时，才需要更新
 """
 class Solution:
-    def trap(self, height: list[int]) -> int:
+    def trap(self, height: List[int]) -> int:
         # 如果数组为空，返回雨水量为0
         if height is None:
             return 0
