@@ -18,7 +18,7 @@ class Solution:
         
         m, n = len(board), len(board[0])
 
-        # DFS 函数，用于标记与边界上的 'O' 相连的 'O'
+        # DFS 函数，用于标记所有不在边界上且不与边界上的 'O' 相连的 'O'
         def dfs(i, j):
             if i < 0 or j < 0 or i >= m or j >= n or board[i][j] != 'O':
                 return
