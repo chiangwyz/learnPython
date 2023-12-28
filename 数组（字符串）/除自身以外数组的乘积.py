@@ -5,7 +5,8 @@
 """
 class Solution:
     def productExceptSelf(self, nums: list[int]) -> list[int]:
-        length = len(nums)  # 数组长度
+        # 数组长度
+        length = len(nums)  
 
         # 初始化左乘积、右乘积和结果数组
         left, right, answer = [0]*length, [0]*length, [0]*length
