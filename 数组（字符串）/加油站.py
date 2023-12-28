@@ -21,11 +21,15 @@ class Solution:
         # 如果总汽油小于总消耗，无法环绕一周
         if sum(gas) < sum(cost):
             return -1
-        
-        n = len(gas)  # 加油站的数量
-        total_tank = 0  # 总油量，用于计算总油量是否大于总耗油量
-        curr_tank = 0  # 当前油量，用于计算从某个加油站出发是否能到达下一个加油站
-        starting_station = 0  # 起始加油站的索引
+
+        # 加油站的数量
+        n = len(gas)  
+        # 总油量，用于计算总油量是否大于总耗油量
+        total_tank = 0  
+        # 当前油量，用于计算从某个加油站出发是否能到达下一个加油站
+        curr_tank = 0  
+        # 起始加油站的索引
+        starting_station = 0  
     
         # 遍历每个加油站
         for i in range(n):
@@ -36,8 +40,10 @@ class Solution:
             # 如果当前油箱为空，则不能从当前加油站到达下一个加油站
             # 因此需要从下一个加油站重新开始计算
             if curr_tank < 0:
-                starting_station = i + 1  # 更新起始加油站为下一个加油站
-                curr_tank = 0  # 重置当前油箱为空
+                # 更新起始加油站为下一个加油站
+                starting_station = i + 1  
+                # 重置当前油箱为空
+                curr_tank = 0 
     
         # 如果总油箱中的油足以走完全程，返回有效的起始加油站
         if total_tank >= 0:
