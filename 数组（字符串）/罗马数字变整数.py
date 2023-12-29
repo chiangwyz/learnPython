@@ -1,3 +1,7 @@
+"""
+罗马数字中没有0这个数字。
+"""
+
 class Solution:
     def romanToInt(self, s: str) -> int:
         # 定义罗马数字到整数的映射
