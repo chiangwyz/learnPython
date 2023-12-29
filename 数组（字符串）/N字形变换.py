@@ -20,7 +20,9 @@ class Solution:
 
         # 初始化行容器
         rows = ['' for _ in range(min(numRows, len(s)))]
+        # 当前行的index
         curRow = 0
+        # 遍历的方向，向下或者向上
         goingDown = False
 
         # 遍历字符串
