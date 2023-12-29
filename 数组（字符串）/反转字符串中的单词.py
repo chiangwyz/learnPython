@@ -10,6 +10,7 @@ class Solution:
         words.reverse()
         # 用单个空格连接单词，形成新的字符串
         reversed_s = ' '.join(words)
+        
         return reversed_s
 
 # 示例测试
