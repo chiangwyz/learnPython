@@ -49,7 +49,7 @@ class Solution:
         通过比较needle的字符来更新lps数组。
         """
         # 构建部分匹配表
-        def build_lps(needle):
+        def build_lps(needle: str):
             lps = [0] * len(needle)  # 初始化部分匹配表
             length = 0  # length用于追踪前缀的长度
             i = 1
