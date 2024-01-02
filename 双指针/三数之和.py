@@ -15,7 +15,7 @@ class Solution:
         result = []
         # 首先对数组进行排序
         nums.sort()
-
+        # 获取数组长度
         n = len(nums)
 
         # 遍历每个数
@@ -23,8 +23,10 @@ class Solution:
             # 跳过重复的数
             if i > 0 and nums[i] == nums[i - 1]:
                 continue
+                
             # 使用双指针
-            left, right = i + 1, n - 1
+            left = i + 1
+            right = n - 1
             while left < right:
                 total = nums[i] + nums[left] + nums[right]
                 if total < 0:
