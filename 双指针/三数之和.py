@@ -10,7 +10,7 @@
 因此，当遇到连续相同的数字时，我们只需考虑第一次出现的数字，后续相同的数字可以跳过。这样做的目的是为了避免在结果集中出现重复的三元组。
 """
 class Solution:
-    def threeSum(self, nums: list[int]) -> list[list[int]]:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
         # 首先对数组进行排序
         nums.sort()
         n = len(nums)
