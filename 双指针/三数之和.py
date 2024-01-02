@@ -11,10 +11,12 @@
 """
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
+        # 返回的数组
+        result = []
         # 首先对数组进行排序
         nums.sort()
+
         n = len(nums)
-        result = []
 
         # 遍历每个数
         for i in range(n):
