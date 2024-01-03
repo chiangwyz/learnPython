@@ -11,7 +11,7 @@
 """
 
 class Solution:
-    def minimumTotal(self, triangle: list[list[int]]) -> int:
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
         n = len(triangle)
         # 从三角形的倒数第二层开始向上计算
         for i in range(n - 2, -1, -1):
