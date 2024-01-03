@@ -17,7 +17,7 @@ class Solution:
         temp = [0] * len(record)
         return self.mergeSort(record, temp, 0, len(record) - 1)
 
-    def mergeSort(self, record: List[int], temp: List[int], left: int, right: int):
+    def mergeSort(self, record: List[int], temp: List[int], left: int, right: int) -> int:
         # 如果左边界大于等于右边界，则不需要排序
         if left >= right:
             return 0
@@ -32,7 +32,7 @@ class Solution:
         count += self.merge(record, temp, left, mid, right)
         return count
 
-    def merge(self, record, temp, left, mid, right):
+    def merge(self, record, temp, left, mid, right) -> int:
         # 初始化指针和逆序对计数器
         i, j, k, count = left, mid + 1, left, 0
 
