@@ -32,7 +32,7 @@ class Solution:
         count += self.merge(record, temp, left, mid, right)
         return count
 
-    def merge(self, record, temp, left, mid, right) -> int:
+    def merge(self, record: List[int], temp: List[int], left: int, mid: int, right: int) -> int:
         # 初始化指针和逆序对计数器
         i, j, k, count = left, mid + 1, left, 0
 
