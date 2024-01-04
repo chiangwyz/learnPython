@@ -11,22 +11,29 @@
 """
 
 class Solution:
-    def uniquePathsWithObstacles(self, obstacleGrid: list[list[int]]) -> int:
-        if not obstacleGrid or obstacleGrid[0][0] == 1:
-            return 0  # 如果起点有障碍物，则无法到达终点
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        # 如果起点有障碍物，则无法到达终点
+        if not obstacleGrid:
+            return 0
 
-        m, n = len(obstacleGrid), len(obstacleGrid[0])
-        dp = [[0] * n for _ in range(m)]
-        dp[0][0] = 1  # 起点
+        rows = len(obstacleGrid)
+        cols = len(obstacleGrid[0])
 
-        for i in range(m):
-            for j in range(n):
+        dp = [[0]*cols for _ in range(rows)]
+        dp[0][0] = 1
+
+        for i in range(rows):
+            for j in range(cols):
                 if obstacleGrid[i][j] == 1:
-                    dp[i][j] = 0  # 如果有障碍物，则路径数为0
+                    # 如果有障碍物，则路径数为0
+                    dp[i][j] = 0  
                 else:
                     if i > 0:
-                        dp[i][j] += dp[i-1][j]  # 加上从上方来的路径数
+                        # 加上从上方来的路径数
+                        dp[i][j] += dp[i-1][j]  
                     if j > 0:
-                        dp[i][j] += dp[i][j-1]  # 加上从左方来的路径数
+                        # 加上从左方来的路径数
+                        dp[i][j] += dp[i][j-1]  
 
-        return dp[m-1][n-1]  # 返回终点的路径数
+        # 返回终点的路径数
+        return dp[rows-1][cols-1]  
