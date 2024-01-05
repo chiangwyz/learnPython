@@ -10,8 +10,10 @@
 
 class Solution:
     def maxSubarraySumCircular(self, nums: List[int]) -> int:
-        def kadane(nums: List[int]):
-            """Kadane算法，用于计算最大子数组和"""
+        def kadane(nums: List[int]) -> int:
+            """
+            Kadane算法，用于计算最大子数组和
+            """
             max_ending_here = max_so_far = nums[0]
             for x in nums[1:]:
                 max_ending_here = max(x, max_ending_here + x)
