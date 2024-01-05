@@ -8,7 +8,7 @@ class Solution:
         :return: str - 处理后的字符串
         """
         stack = []
-        for char in S:
+        for char in s:
             # 检查栈顶是否有两个连续且相同的字符
             if len(stack) >= 2 and stack[-1] == char and stack[-2] == char:
                 # 如果找到了三个连续的字符，则弹出栈顶的两个字符
@@ -22,5 +22,6 @@ class Solution:
 
 # 测试函数
 input_string = "abbbaaca"
-result = removeTripleDuplicates(input_string)
-result
+solution = Solution()
+result = solution.removeTripleDuplicates(input_string)
+print(result)
