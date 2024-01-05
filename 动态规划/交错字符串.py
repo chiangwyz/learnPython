@@ -19,7 +19,7 @@ class Solution:
         if len(s1) + len(s2) != len(s3):
             return False
 
-        # 初始化 dp 数组
+        # 初始化 dp 数组，其中 dp[i][j] 表示 s1 的前 i 个字符和 s2 的前 j 个字符是否能交错组成 s3 的前 i+j 个字符。
         dp = [[False] * (len(s2) + 1) for _ in range(len(s1) + 1)]
         # 两个空字符串可以组成一个空字符串
         dp[0][0] = True  
