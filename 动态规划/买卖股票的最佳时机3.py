@@ -32,8 +32,10 @@ class Solution:
             first_sell = max(first_sell, first_buy + price)  
 
             # 更新第二次买入和第二次卖出后的最大利润
-            second_buy = max(second_buy, first_sell - price)  # 第二次买入股票的最大利润，考虑到第一次的利润
-            second_sell = max(second_sell, second_buy + price)  # 第二次卖出股票的最大利润
+            # 第二次买入股票的最大利润，考虑到第一次的利润
+            second_buy = max(second_buy, first_sell - price)  
+            # 第二次卖出股票的最大利润
+            second_sell = max(second_sell, second_buy + price)  
 
         return second_sell  # 最终结果
 
