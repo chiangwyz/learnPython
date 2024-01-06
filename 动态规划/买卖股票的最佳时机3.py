@@ -14,7 +14,7 @@
 
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        if not prices:
+        if len(prices) <= 1:
             return 0
 
         # 初始化四个变量
