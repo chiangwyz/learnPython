@@ -16,6 +16,10 @@ class MedianFinder:
 
     def __init__(self):
         # 最大堆存储较小的一半元素，最小堆存储较大的一半元素
+        """
+        max_heap = [-8, -3, -1, 8, 9]
+        min_heap = [10, 11, 12, 14]
+        """
         self.max_heap = []
         self.min_heap = []
 
@@ -38,5 +42,8 @@ class MedianFinder:
             return (-self.max_heap[0] + self.min_heap[0]) / 2.0
         # 否则，中位数是元素较多的那个堆的顶部元素
         else:
-            return -self.max_heap[0] if len(self.max_heap) > len(self.min_heap) else self.min_heap[0]
+            if len(self.max_heap) > len(self.min_heap):
+                return -self.max_heap[0]
+            else:
+                return self.min_heap[0]
 
