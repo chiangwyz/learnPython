@@ -55,7 +55,7 @@ class Solution:
                 dp[i][j] = False
         
                 # 检查 s1 的当前字符是否匹配，并且之前的状态为 True
-                if s1[i - 1] == s3[i + j - 1] and dp[i - 1][j]:
+                if s1[i - 1] == s3[i - 1 + j] and dp[i - 1][j]:
                     dp[i][j] = True
         
                 # 检查 s2 的当前字符是否匹配，并且之前的状态为 True
