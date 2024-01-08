@@ -1,6 +1,4 @@
 
-
-
 class TrieNode:
     # Trie 的节点类
     def __init__(self):
