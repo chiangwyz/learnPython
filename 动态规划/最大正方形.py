@@ -32,8 +32,3 @@ class Solution:
         
         # 返回最大正方形的面积
         return max_side ** 2
-
-
-
-
-
