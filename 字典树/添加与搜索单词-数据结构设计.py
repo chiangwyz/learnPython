@@ -32,7 +32,7 @@ class WordDictionary:
         node.is_end_of_word = True
 
     def search(self, word: str) -> bool:
-        def dfs(j, root):
+        def dfs(j: int, root: TreeNode):
             node = root
             for i in range(j, len(word)):
                 char = word[i]
