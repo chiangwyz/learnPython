@@ -14,9 +14,10 @@
 example_words = ["foo", "bar"]
 example_words_counter = Counter(example_words)
 print("example_words_counter = ", example_words_counter)
-# 输出结果
-example_words_counter =  Counter({'foo': 1, 'bar': 1})
+
+example_words_counter =  Counter({'foo': 1, 'bar': 1}) # 输出结果
 """
+
 from collections import Counter
 
 class Solution:
