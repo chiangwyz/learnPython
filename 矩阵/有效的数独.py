@@ -20,14 +20,15 @@
 查找 rows[i] 这个字典里 num 这个键的值，如果没有找到 num 这个键，就返回0。
 将这个值加1，然后将结果重新赋值给 rows[i] 这个字典里的 num 键，相当于更新了 num 这个数字在第 i 行出现的次数。
 """
+from collections import defaultdict
 
 # Python 函数来验证数独是否有效
 class Solution:
     def isValidSudoku(self, board: list[list[str]]) -> bool:
-        # 为数独的每一行、每一列和每个3x3宫初始化字典
-        rows = [{} for _ in range(9)]
-        columns = [{} for _ in range(9)]
-        boxes = [{} for _ in range(9)]
+        # 使用 defaultdict 初始化数独的每一行、每一列和每个3x3宫
+        rows = [defaultdict(int) for _ in range(9)]
+        columns = [defaultdict(int) for _ in range(9)]
+        boxes = [defaultdict(int) for _ in range(9)]
     
         # 遍历数独的每一个单元格
         for i in range(9):
