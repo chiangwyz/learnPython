@@ -43,7 +43,6 @@ matrix = [
     在我们的例子中，[[4, 7], [5, 8], [6, 9]][::-1] 变成 [[6, 9], [5, 8], [4, 7]]。
 """
 
-
 class Solution:
     def spiralOrder(self, matrix: list[list[int]]) -> list[int]:
         res = []
