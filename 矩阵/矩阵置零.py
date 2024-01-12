@@ -8,6 +8,7 @@
 5. 根据matrix[0][0]和is_col的值更新第一行和第一列。
 6. 返回修改后的矩阵。
 """
+
 class Solution:
     def setZeroes(self, matrix: list[list[int]]) -> None:
         # 记录第一列是否需要设置为0
@@ -18,36 +19,29 @@ class Solution:
         for i in range(rows):
             if matrix[i][0] == 0:
                 # 第一列需要置0
-                is_col = True  
-            
-            # 从第二列开始
-            for j in range(1, cols):  
-                 # 如果发现0
-                if matrix[i][j] == 0: 
+                is_col = True
+
+                # 从第二列开始
+            for j in range(1, cols):
+                # 如果发现0
+                if matrix[i][j] == 0:
                     # 标记在第一行和第一列
                     matrix[i][0] = 0
                     matrix[0][j] = 0
-        
+
         # 第二次遍历，根据第一行和第一列的标记来更新矩阵
         for i in range(1, rows):
             for j in range(1, cols):
                 # 如果第一行或第一列的标记为0，则当前元素设置为0
                 if matrix[i][0] == 0 or matrix[0][j] == 0:
                     matrix[i][j] = 0
-        
+
         # 根据第一行是否需要置0来更新第一行
         if matrix[0][0] == 0:
             for j in range(cols):
                 matrix[0][j] = 0
-        
+
         # 根据is_col变量来更新第一列
         if is_col:
             for i in range(rows):
                 matrix[i][0] = 0
-
-
-
-
-
-
-
