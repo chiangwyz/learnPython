@@ -54,3 +54,4 @@ print(solution.exist(board, word))
 board1 = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]]
 word1 = "ABCB"
 print(solution.exist(board1, word1))
+
