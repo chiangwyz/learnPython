@@ -11,12 +11,13 @@
    如果当前气球的起始位置小于或等于 end，则可以不增加箭的数量，继续遍历下一个气球。
 """
 
+
 class Solution:
     def findMinArrowShots(self, points: list[list[int]]) -> int:
         if not points:
             return 0
 
-        # 根据每个气球的结束位置排序
+        # 根据每个气球的结束坐标升序排序
         points.sort(key=lambda x: x[1])
 
         arrows = 1  # 至少需要一支箭
@@ -30,4 +31,13 @@ class Solution:
 
         return arrows
 
+
+# test
+sol = Solution()
+
+points1 = [[10, 16], [2, 8], [1, 6], [7, 12]]
+points2 = [[1,2],[3,4],[5,6],[7,8]]
+
+print(sol.findMinArrowShots(points1))
+print(sol.findMinArrowShots(points2))
 
