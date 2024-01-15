@@ -52,6 +52,7 @@ def create_linked_list_with_cycle(array: list[int], pos: int) -> Optional[ListNo
 
     return head
 
+
 # test
 array = [3, 2, 0, -4, 2]
 pos = 1
