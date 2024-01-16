@@ -39,7 +39,8 @@ class Solution:
         # 如果其中一个链表已经遍历完，将另一个链表的剩余部分连接到当前链表的末尾
         current.next = list1 if list1 else list2
 
-        return dummy.next  # 返回合并后的链表头节点
+        # 返回合并后的链表头节点
+        return dummy.next
 
 
 def create_linked_list(arr: list[int]) -> Optional[ListNode]:
