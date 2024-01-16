@@ -15,7 +15,7 @@ LRU是Least Recently Used的缩写，即最近最少使用，是一种常用的�
 class LRUCache:
     class DLinkedNode:
         # 双向链表的节点类
-        def __init__(self, key=0, value=0):
+        def __init__(self, key: int=0, value: int=0):
             self.key = key
             self.value = value
             self.prev = None
@@ -23,7 +23,6 @@ class LRUCache:
 
     def __init__(self, capacity: int):
         # 初始化LRU缓存
-
         # 哈希表用于存储键和节点
         self.cache = {}
         # 缓存容量
@@ -39,6 +38,7 @@ class LRUCache:
         if key not in self.cache:
             # 如果键不存在返回-1
             return -1
+        # 获取节点
         node = self.cache[key]
         # 将节点移动到头部表示最近访问
         self.moveToHead(node)
@@ -79,8 +79,34 @@ class LRUCache:
         self.removeNode(node)
         self.addToHead(node)
 
-    def removeTail(self):
+    def removeTail(self) -> DLinkedNode:
         # 移除尾部节点
         res = self.tail.prev
         self.removeNode(res)
         return res
+
+# 定义LRUCache类（假设已经实现）
+
+# 测试用例
+operations = ["LRUCache", "put", "put", "get", "put", "get", "put", "get", "get", "get"]
+values = [[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]
+expected_outputs = [None, None, None, 1, None, -1, None, -1, 3, 4]
+
+# 实例化LRUCache和执行操作
+obj = None
+actual_outputs = []
+for op, val in zip(operations, values):
+    if op == "LRUCache":
+        obj = LRUCache(*val)
+        actual_outputs.append(None)
+    elif op == "put":
+        obj.put(*val)
+        actual_outputs.append(None)
+    elif op == "get":
+        result = obj.get(*val)
+        actual_outputs.append(result)
+
+# 检查实际输出是否符合预期输出
+assert actual_outputs == expected_outputs, f"Test failed! Expected {expected_outputs}, got {actual_outputs}"
+
+print("Test passed!")
