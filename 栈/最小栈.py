@@ -3,6 +3,8 @@
 另一个是辅助栈 self.min_stack，用于跟踪当前栈中的最小元素。
 可以在任何时候以 O(1) 的复杂度获取到最小值。
 """
+
+
 class MinStack:
     def __init__(self):
         # 主栈，用于存储所有元素
@@ -38,6 +40,7 @@ class MinStack:
         if not self.min_stack:
             raise IndexError("getMin from an empty stack")
         return self.min_stack[-1]
+
 
 # test
 def test_min_stack():
@@ -83,6 +86,7 @@ def test_min_stack():
     assert min_stack.getMin() == 10, "Min should still be 10 after popping 5"
 
     print("All tests passed.")
+
 
 # 运行测试
 test_min_stack()
