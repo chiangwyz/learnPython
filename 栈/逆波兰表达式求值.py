@@ -11,6 +11,7 @@
 4. 在数组的最后，栈顶元素就是整个表达式的结果。
 """
 
+
 class Solution:
     def evalRPN(self, tokens: list[str]) -> int:
         # 初始化栈
@@ -22,7 +23,7 @@ class Solution:
             if token in "+-*/":
                 # 从栈中弹出两个元素
                 right = stack.pop()  # 右操作数
-                left = stack.pop()   # 左操作数
+                left = stack.pop()  # 左操作数
 
                 # 根据运算符进行运算
                 if token == '+':
@@ -40,3 +41,20 @@ class Solution:
         # 返回栈顶元素，即最终结果
         return stack.pop()
 
+
+# 测试
+test_cases = [
+    ["2", "3", "+"],
+    ["4", "13", "5", "/", "+"],
+    ["10", "6", "9", "3", "+", "-11", "*", "/", "*"],
+    ["2", "1", "+", "3", "*"],
+    ["4", "13", "5", "/", "-"]
+]
+
+
+solution = Solution()
+
+# 对每个测试用例进行求值
+for case in test_cases:
+    result = solution.evalRPN(case)
+    print("表达式 {} 的结果为：{}".format(case, result))
