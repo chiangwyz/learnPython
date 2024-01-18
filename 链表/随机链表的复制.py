@@ -56,3 +56,62 @@ class Solution:
         return new_head
 
 
+import unittest
+
+class TestSolution(unittest.TestCase):
+    def list_to_nodes(self, values, random_indices):
+        nodes = [Node(val) for val in values]
+        for i, node in enumerate(nodes):
+            if i < len(values) - 1:
+                node.next = nodes[i + 1]
+            if random_indices[i] is not None:
+                node.random = nodes[random_indices[i]]
+        return nodes[0] if nodes else None
+
+    def compare_lists(self, list1, list2):
+        while list1 and list2:
+            self.assertEqual(list1.val, list2.val)
+            if list1.random or list2.random:
+                self.assertEqual(list1.random.val, list2.random.val)
+            list1, list2 = list1.next, list2.next
+        self.assertIsNone(list1)
+        self.assertIsNone(list2)
+
+    def test_empty_list(self):
+        solution = Solution()
+        self.assertIsNone(solution.copyRandomList(None))
+
+    def test_no_random_pointer(self):
+        solution = Solution()
+        head = self.list_to_nodes([1, 2, 3, 4], [None, None, None, None])
+        copied_head = solution.copyRandomList(head)
+        self.compare_lists(head, copied_head)
+
+    def test_simple_random_pointer(self):
+        solution = Solution()
+        head = self.list_to_nodes([1, 2, 3], [None, 0, 1])
+        copied_head = solution.copyRandomList(head)
+        self.compare_lists(head, copied_head)
+
+    def test_complex_random_pointer(self):
+        solution = Solution()
+        head = self.list_to_nodes([1, 2, 3, 4], [3, 0, 1, 2])
+        copied_head = solution.copyRandomList(head)
+        self.compare_lists(head, copied_head)
+
+    def test_original_list_unchanged(self):
+        solution = Solution()
+        head = self.list_to_nodes([1, 2, 3, 4], [3, 0, 1, 2])
+        original_list = [node.val for node in self.iterate_list(head)]
+        solution.copyRandomList(head)
+        unchanged_list = [node.val for node in self.iterate_list(head)]
+        self.assertEqual(original_list, unchanged_list)
+
+    def iterate_list(self, head):
+        while head:
+            yield head
+            head = head.next
+
+
+if __name__ == '__main__':
+    unittest.main()
