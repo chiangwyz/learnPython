@@ -15,14 +15,16 @@
     >> 是右位移操作符，n >> 1 表示将 n 中的二进制位全部向右移动一位（最左边补 0）。
 """
 
+
 class Solution:
     def reverseBits(self, n: int) -> int:
         res = 0
         for i in range(32):  # 遍历32位
-            res = res << 1   # 将res左移一位
-            res += n & 1     # 将n的最后一位加到res上
-            n = n >> 1       # 将n右移一位
+            res = res << 1  # 将res左移一位
+            res += n & 1  # 将n的最后一位加到res上
+            n = n >> 1  # 将n右移一位
         return res
+
 
 # test
 import unittest
@@ -35,6 +37,7 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(sol.reverseBits(0b00000010100101000001111010011100), 964176192)
         # 测试用例 2
         self.assertEqual(sol.reverseBits(0b11111111111111111111111111111101), 3221225471)
+
 
 if __name__ == '__main__':
     unittest.main()
