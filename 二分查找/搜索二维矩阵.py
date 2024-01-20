@@ -38,6 +38,7 @@ class Solution:
 
 import unittest
 
+
 class TestSearchMatrix(unittest.TestCase):
     def setUp(self):
         self.solution = Solution()
