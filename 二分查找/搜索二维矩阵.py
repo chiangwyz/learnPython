@@ -13,6 +13,7 @@
     然后不断地将目标值与行中间元素进行比较，根据比较的结果调整指针，直到找到目标值或者搜索区间为空。
 """
 
+
 class Solution:
     def searchMatrix(self, matrix: list[list[int]], target: int) -> bool:
         # 遍历每一行
@@ -75,6 +76,6 @@ class TestSearchMatrix(unittest.TestCase):
         self.assertTrue(self.solution.searchMatrix(matrix, 4))
         self.assertFalse(self.solution.searchMatrix(matrix, 10))
 
+
 if __name__ == '__main__':
     unittest.main()
-
