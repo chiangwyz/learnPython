@@ -15,6 +15,7 @@ Dj 的路径，并计算沿途边的权重乘积。如果不存在这样的路�
 
 from collections import defaultdict
 
+
 class Solution:
     def calcEquation(self, equations: list[list[str]], values: list[float], queries: list[list[str]]) -> list[float]:
         def build_graph(equations: list[list[str]], values: list[float]) -> dict[str, dict[str, float]]:
@@ -27,6 +28,7 @@ class Solution:
             for (x, y), value in zip(equations, values):
                 graph[x][y] = value
                 graph[y][x] = 1.0 / value
+                print("{} {}".format(x, y))
             return graph
 
         def find_value(graph: dict[str, dict[str, float]], start: str, end: str, visited: set[str]) -> float:
@@ -84,4 +86,3 @@ def test_calcEquation():
 if __name__ == "__main__":
     # 调用测试函数
     test_calcEquation()
-

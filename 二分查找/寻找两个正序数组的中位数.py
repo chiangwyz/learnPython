@@ -14,6 +14,7 @@
   如果是偶数，我们需要找到第 ((m+n)/2) 和 ((m+n)/2) + 1 小的数，并计算它们的平均值。
 """
 
+
 def findMedianSortedArrays(nums1: List[int], nums2: List[int]) -> float:
     def findKthElement(arr1, arr2, k):
         """
@@ -43,12 +44,10 @@ def findMedianSortedArrays(nums1: List[int], nums2: List[int]) -> float:
     if total_length % 2 == 1:
         return findKthElement(nums1, nums2, total_length // 2 + 1)
     else:
-        return (findKthElement(nums1, nums2, total_length // 2) + findKthElement(nums1, nums2, total_length // 2 + 1)) / 2
-
-# 再次测试函数
-test1 = findMedianSortedArrays([1,3], [2])
-test2 = findMedianSortedArrays([1,2], [3,4])
-test1, test2
+        return (findKthElement(nums1, nums2, total_length // 2) + findKthElement(nums1, nums2,
+                                                                                 total_length // 2 + 1)) / 2
 
 
-
+# 测试函数
+test1 = findMedianSortedArrays([1, 3], [2])
+test2 = findMedianSortedArrays([1, 2], [3, 4])
