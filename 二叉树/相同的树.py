@@ -1,11 +1,14 @@
 """
 这个方法的核心在于递归地比较两棵树的节点。
-首先，我们检查两棵树的根节点是否都为空，如果是，则树相同。
-其次，如果其中一个树的根节点为空而另一个不是，这两棵树不相同。
-接着，如果两棵树的根节点的值不同，那么树也不相同。
-最后，如果根节点的值相同，我们递归地比较左子树和右子树。
-只有在所有对应的左子树和右子树都相同的情况下，这两棵树才被认为是相同的。
+1. 首先，我们检查两棵树的根节点是否都为空，如果是，则树相同。
+2. 其次，如果其中一个树的根节点为空而另一个不是，这两棵树不相同。
+3. 接着，如果两棵树的根节点的值不同，那么树也不相同。
+4. 最后，如果根节点的值相同，我们递归地比较左子树和右子树。
+5. 只有在所有对应的左子树和右子树都相同的情况下，这两棵树才被认为是相同的。
 """
+
+from typing import Optional
+
 
 # Definition for a binary tree node.
 class TreeNode:
@@ -13,6 +16,7 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+
 
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
@@ -30,4 +34,3 @@ class Solution:
 
         # 递归地检查左子树和右子树
         return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
-
