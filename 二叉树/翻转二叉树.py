@@ -9,6 +9,8 @@
 这个过程从根节点开始，并遍历整个树，确保每个节点的左右子树都被交换。
 """
 
+from typing import Optional
+
 # Definition for a binary tree node.
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -16,12 +18,13 @@ class TreeNode:
         self.left = left
         self.right = right
 
+
 class Solution:
-    def invertTree(self, root: TreeNode) -> TreeNode:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         # 当前节点为空时直接返回
         if not root:
-            return None  
-        
+            return None
+
         # 交换当前节点的左右子节点
         root.left, root.right = root.right, root.left
 
