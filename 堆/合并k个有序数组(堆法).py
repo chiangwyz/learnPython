@@ -8,12 +8,13 @@ import heapq
 
 
 class Solution:
-    def merge_k_sorted_arrays(self, arrays):
+    def merge_k_sorted_arrays(self, arrays: list[list[int]]):
         # 创建一个最小堆
         min_heap = []
         # 初始化堆，将每个数组的第一个元素及其索引和数组索引放入堆中
         for i, array in enumerate(arrays):
             if array:
+                # 注入最小堆的元组内元素依次为：数组的第一个元素，数组索引，元素索引
                 heapq.heappush(min_heap, (array[0], i, 0))
 
         result = []

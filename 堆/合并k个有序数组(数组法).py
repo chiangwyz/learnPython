@@ -4,7 +4,7 @@
 
 
 class Solution:
-    def merge_two_sorted_arrays(self, arr1, arr2):
+    def merge_two_sorted_arrays(self, arr1: list[int], arr2: list[int]):
         # 合并两个有序数组
         result = []
         i, j = 0, 0
@@ -18,9 +18,11 @@ class Solution:
         # 添加剩余的元素
         result.extend(arr1[i:])
         result.extend(arr2[j:])
+
+        # 返回结果
         return result
 
-    def merge_k_sorted_arrays_sequential(self, arrays):
+    def merge_k_sorted_arrays_sequential(self, arrays: list[list[int]]):
         if not arrays:
             return []
         merged_array = arrays[0]
