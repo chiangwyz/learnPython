@@ -11,7 +11,7 @@
 """
 
 class Solution:
-    def minimumTotal(self, triangle: List[List[int]]) -> int:
+    def minimumTotal(self, triangle: list[list[int]]) -> int:
         n = len(triangle)
         # 从三角形的倒数第二层开始向上计算
         for i in range(n - 2, -1, -1):
@@ -21,5 +21,17 @@ class Solution:
         return triangle[0][0]
 
 
+import unittest
+
+class TestSolution(unittest.TestCase):
+    def test_minimumTotal(self):
+        sol = Solution()
+        self.assertEqual(sol.minimumTotal([[2],[3,4],[6,5,7],[4,1,8,3]]), 11)
+        self.assertEqual(sol.minimumTotal([[-10]]), -10)
+
+
+if __name__ == "__main__":
+    test_solution = TestSolution()
+    test_solution.test_minimumTotal()
 
 
