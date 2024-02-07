@@ -11,7 +11,7 @@
 """
 
 class Solution:
-    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+    def uniquePathsWithObstacles(self, obstacleGrid: list[list[int]]) -> int:
         # 如果起点有障碍物，则无法到达终点
         if not obstacleGrid:
             return 0
