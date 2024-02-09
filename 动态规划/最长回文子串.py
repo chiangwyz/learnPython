@@ -64,19 +64,12 @@ class Solution:
 
         return longest_palindrome
 
+
 # 测试用例
 test_cases = ["babad", "cbbd"]
 
-# 创建 Solution 实例
 sol = Solution()
 
-# 计算结果
 results = [sol.longestPalindrome(s) for s in test_cases]
-results
 
-
-
-
-
-
-
+print(results)
