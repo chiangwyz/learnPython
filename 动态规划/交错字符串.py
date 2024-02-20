@@ -14,6 +14,7 @@
 3. 返回 dp 数组的最后一个元素 dp[len(s1)][len(s2)]，它表示整个 s1 和 s2 是否能交错组成整个 s3。
 """
 
+
 class Solution:
     def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
         # 如果 s3 的长度不等于 s1 和 s2 长度之和，直接返回 False
@@ -23,7 +24,7 @@ class Solution:
         # 初始化 dp 数组，其中 dp[i][j] 表示 s1 的前 i 个字符和 s2 的前 j 个字符是否能交错组成 s3 的前 i+j 个字符。
         dp = [[False] * (len(s2) + 1) for _ in range(len(s1) + 1)]
         # 两个空字符串可以组成一个空字符串
-        dp[0][0] = True  
+        dp[0][0] = True
 
         """
         dp[i - 1][0] 是否为 True：这表示 s1 的前 i-1 个字符是否能交错组成 s3 的前 i-1 个字符。
@@ -47,36 +48,19 @@ class Solution:
             else:
                 dp[0][j] = False
 
-
         # 填充 dp 数组的其余部分
         for i in range(1, len(s1) + 1):
             for j in range(1, len(s2) + 1):
                 # 初始化当前状态为 False
                 dp[i][j] = False
-        
+
                 # 检查 s1 的当前字符是否匹配，并且之前的状态为 True
                 if s1[i - 1] == s3[i - 1 + j] and dp[i - 1][j]:
                     dp[i][j] = True
-        
+
                 # 检查 s2 的当前字符是否匹配，并且之前的状态为 True
                 if s2[j - 1] == s3[i + j - 1] and dp[i][j - 1]:
                     dp[i][j] = True
 
-
         # 返回最后一个元素的值，表示是否能够交错组成
         return dp[len(s1)][len(s2)]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
