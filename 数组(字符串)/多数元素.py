@@ -23,7 +23,7 @@
 """
 
 class Solution:
-    def majorityElement(self, nums: List[int]) -> int:
+    def majorityElement(self, nums: list[int]) -> int:
         # 初始化计数器
         count = 0  
         # 初始化候选多数元素为None
