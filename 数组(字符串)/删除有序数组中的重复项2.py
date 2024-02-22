@@ -1,5 +1,5 @@
 class Solution:
-    def removeDuplicates(self, nums: List[int]) -> int:
+    def removeDuplicates(self, nums: list[int]) -> int:
         # 数组长度小于3，不可能有超过两次的重复
         if len(nums) < 3:
             return len(nums)
