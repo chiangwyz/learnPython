@@ -13,7 +13,7 @@ for循环内部：
 4. 保守更新策略：我们只在确认当前位置可达的情况下更新 max_reach，这样可以避免基于不可达位置的错误更新。
 """
 class Solution:
-    def canJump(self, nums: List[int]) -> bool:
+    def canJump(self, nums: list[int]) -> bool:
         # 初始化最远到达位置为0
         max_reach = 0  
 
