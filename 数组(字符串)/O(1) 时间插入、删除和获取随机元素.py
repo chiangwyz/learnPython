@@ -8,6 +8,9 @@ self.num_to_index = {} 这个字典（也称为哈希表）在 RandomizedSet 类
     这就需要将最后一个元素移动到被删除元素的位置，这样就不会留下空位。字典使我们能够在 O(1) 时间内找到这两个元素的索引，从而快速进行这个操作。
 3. getRandom 操作则是通过随机选择 self.num_list 列表中的一个索引来返回一个元素，因为列表的随机访问也是 O(1) 的。
 """
+
+import random
+
 class RandomizedSet:
     def __init__(self):
         # 用于存储元素的列表
