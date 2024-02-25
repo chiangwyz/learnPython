@@ -21,7 +21,7 @@ farest: 记录在当前步骤及之前所有步骤中，能跳到的最远位置
 
 
 class Solution:
-    def jump(self, nums: List[int]) -> int:
+    def jump(self, nums: list[int]) -> int:
         jumps = 0
         current_end = 0
         farthest = 0
