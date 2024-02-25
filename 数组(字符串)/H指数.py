@@ -15,8 +15,8 @@ class Solution:
 
         return h
 
-class Solution:
-    def hIndex(self, citations: List[int]) -> int:
+class Solution2:
+    def hIndex(self, citations: list[int]) -> int:
         sorted_citations = sorted(citations, reverse=True)
 
         h = 0
