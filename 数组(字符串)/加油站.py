@@ -17,7 +17,7 @@
 这是一种贪心算法的实现，它在每一步都做出当时看起来最好的选择（即选择下一个加油站作为新的起始点），最终得到全局最优解。
 """
 class Solution:
-    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+    def canCompleteCircuit(self, gas: list[int], cost: list[int]) -> int:
         # 如果总汽油小于总消耗，无法环绕一周
         if sum(gas) < sum(cost):
             return -1
@@ -50,3 +50,36 @@ class Solution:
             return starting_station
         else:
             return -1
+
+
+import unittest
+
+
+class TestGasStation(unittest.TestCase):
+    def setUp(self):
+        self.solution = Solution()
+
+    def test_can_complete_circuit(self):
+        # 测试可以环绕一周的情况
+        self.assertEqual(self.solution.canCompleteCircuit([1, 2, 3, 4, 5], [3, 4, 5, 1, 2]), 3)
+
+    def test_cannot_complete_circuit(self):
+        # 测试无法环绕一周的情况
+        self.assertEqual(self.solution.canCompleteCircuit([2, 3, 4], [3, 4, 3]), -1)
+
+    def test_total_gas_equals_total_cost(self):
+        # 测试总油量正好等于总消耗量的情况
+        self.assertEqual(self.solution.canCompleteCircuit([2, 3, 1], [3, 1, 2]), 1)
+
+    def test_single_station(self):
+        # 测试只有一个加油站的情况
+        self.assertEqual(self.solution.canCompleteCircuit([1], [1]), 0)
+        self.assertEqual(self.solution.canCompleteCircuit([2], [3]), -1)
+
+    def test_no_valid_start(self):
+        # 测试多个加油站但无法找到起点的情况
+        self.assertEqual(self.solution.canCompleteCircuit([1, 2, 3, 4, 5], [5, 5, 5, 5, 5]), -1)
+
+
+if __name__ == '__main__':
+    unittest.main()
