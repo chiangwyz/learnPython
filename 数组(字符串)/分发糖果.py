@@ -6,8 +6,6 @@ class Solution:
     def candy(self, ratings: list[int]) -> int:
         n = len(ratings)
 
-
-
         # 初始化糖果数组，每个孩子至少有一颗糖果
         candies = [1] * n
         

@@ -3,9 +3,9 @@
 if height[left] >= left_max: 当当前值超过最大值时，才需要更新
 """
 class Solution:
-    def trap(self, height: List[int]) -> int:
+    def trap(self, height: list[int]) -> int:
         # 如果数组为空，返回雨水量为0
-        if height is None:
+        if not height:
             return 0
 
         # 获取数组长度
@@ -47,4 +47,27 @@ class Solution:
         # 返回计算出的雨水总量
         return result
 
-      
+
+import unittest
+
+class TestTrapFunction(unittest.TestCase):
+    def test_empty_array(self):
+        self.assertEqual(Solution().trap([]), 0, "Should be 0 for empty array")
+
+    def test_single_element_array(self):
+        self.assertEqual(Solution().trap([1]), 0, "Should be 0 for single element array")
+
+    def test_no_trap(self):
+        self.assertEqual(Solution().trap([1, 2, 3, 4, 5]), 0, "Should be 0 for strictly increasing array")
+        self.assertEqual(Solution().trap([5, 4, 3, 2, 1]), 0, "Should be 0 for strictly decreasing array")
+
+    def test_simple_trap(self):
+        self.assertEqual(Solution().trap([3, 0, 2]), 2, "Should trap 2 units of water")
+
+    def test_complex_trap(self):
+        self.assertEqual(Solution().trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]), 6, "Should trap 6 units of water")
+        self.assertEqual(Solution().trap([4, 2, 0, 3, 2, 5]), 9, "Should trap 9 units of water")
+
+if __name__ == '__main__':
+    unittest.main()
+
