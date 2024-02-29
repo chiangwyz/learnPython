@@ -51,22 +51,25 @@ class Solution:
 import unittest
 
 class TestTrapFunction(unittest.TestCase):
+    def setUp(self) -> None:
+        self.solution = Solution()
+
     def test_empty_array(self):
-        self.assertEqual(Solution().trap([]), 0, "Should be 0 for empty array")
+        self.assertEqual(self.solution.trap([]), 0, "Should be 0 for empty array")
 
     def test_single_element_array(self):
-        self.assertEqual(Solution().trap([1]), 0, "Should be 0 for single element array")
+        self.assertEqual(self.solution.trap([1]), 0, "Should be 0 for single element array")
 
     def test_no_trap(self):
-        self.assertEqual(Solution().trap([1, 2, 3, 4, 5]), 0, "Should be 0 for strictly increasing array")
-        self.assertEqual(Solution().trap([5, 4, 3, 2, 1]), 0, "Should be 0 for strictly decreasing array")
+        self.assertEqual(self.solution.trap([1, 2, 3, 4, 5]), 0, "Should be 0 for strictly increasing array")
+        self.assertEqual(self.solution.trap([5, 4, 3, 2, 1]), 0, "Should be 0 for strictly decreasing array")
 
     def test_simple_trap(self):
-        self.assertEqual(Solution().trap([3, 0, 2]), 2, "Should trap 2 units of water")
+        self.assertEqual(self.solution.trap([3, 0, 2]), 2, "Should trap 2 units of water")
 
     def test_complex_trap(self):
-        self.assertEqual(Solution().trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]), 6, "Should trap 6 units of water")
-        self.assertEqual(Solution().trap([4, 2, 0, 3, 2, 5]), 9, "Should trap 9 units of water")
+        self.assertEqual(self.solution.trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]), 6, "Should trap 6 units of water")
+        self.assertEqual(self.solution.trap([4, 2, 0, 3, 2, 5]), 9, "Should trap 9 units of water")
 
 if __name__ == '__main__':
     unittest.main()
