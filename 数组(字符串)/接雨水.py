@@ -71,6 +71,7 @@ class TestTrapFunction(unittest.TestCase):
         self.assertEqual(self.solution.trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]), 6, "Should trap 6 units of water")
         self.assertEqual(self.solution.trap([4, 2, 0, 3, 2, 5]), 9, "Should trap 9 units of water")
 
+
 if __name__ == '__main__':
     unittest.main()
 
