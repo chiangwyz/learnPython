@@ -20,7 +20,7 @@ from typing import Optional
 
 
 class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
+    def __init__(self, val: int = 0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
@@ -31,7 +31,7 @@ class Solution:
         if not preorder or not inorder:
             return None
 
-        # 先序遍历的第一个值就是根节点
+        # 先序遍历的第一个元素就是根节点
         root = TreeNode(preorder[0])
         # 在中序遍历中找到根节点的位置
         mid = inorder.index(preorder[0])
