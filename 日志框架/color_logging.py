@@ -49,6 +49,8 @@ if __name__ == '__main__':
     # 使用示例
     logger = LoggerFactory.get_colored_logger()
 
+    # logger.info("{}".format(3))
+
     logger.debug('This is a debug message')
     logger.info('This is an info message')
     logger.warning('This is a warning message')
