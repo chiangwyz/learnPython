@@ -25,9 +25,9 @@ b = np.array([True, False, True, False, True])
 # 使用 np.nonzero 找到值为 True 的元素的索引
 indices = np.nonzero(b)
 
-print("indices =", indices)
-print("indices[0] =", indices[0])
-print("indices[0][0] =", indices[0][0])
+print("b indices =", indices)
+print("b indices[0] =", indices[0])
+print("b indices[0][0] =", indices[0][0])
 # 输出: (array([0, 2, 4]),)
 # 解释: 返回一个元组，其中包含一个数组。数组中的值是 True 元素的索引。
 
