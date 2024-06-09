@@ -16,6 +16,7 @@ class Example:
         if 0 <= task_id < self.num_tasks:
             self.used_tasks[task_id] = True
 
+
 # 创建 Example 实例，假设有 5 个任务
 example = Example(5)
 print(example.used_tasks)  # 输出: [False False False False False]
