@@ -8,6 +8,7 @@ __call__方法确实是一个特殊的方法，目的是让一个类的实例能
 也就是说，__call__方法可以根据传入的参数或其他条件来决定执行什么行为。
 """
 
+
 class MultiBehavior:
     def __init__(self):
         self.state = "initial"
