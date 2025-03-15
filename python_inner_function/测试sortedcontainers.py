@@ -1,7 +1,7 @@
 from sortedcontainers import SortedSet
 
 # 创建一个空的 SortedSet
-s = SortedSet()
+s1 = SortedSet()
 
 # 创建一个有初始值的 SortedSet
 s = SortedSet([5, 1, 3, 4, 2])
