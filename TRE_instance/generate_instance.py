@@ -2,15 +2,15 @@
 
 import os
 import json
+import matplotlib.pyplot as plt
 import math
 import random
 import numpy as np
 
+
 # -----------------------------
 # 1. 定义各 Set（1~10）的固定参数
 # -----------------------------
-# 对应表 Table \ref{instance_table} 中的各列：
-#   |V_FC|, |V_DC|, |V_CDP|, |V_C|, |P|, |\Pi_1|, |\Pi_2|
 SET_PARAMS = {
     1:  {'n_FC': 2, 'n_DC': 4,  'n_CDP': 10,  'n_C': 20,  'P': 2, 'Pi1': 4,  'Pi2': 8},
     2:  {'n_FC': 2, 'n_DC': 4,  'n_CDP': 12,  'n_C': 20,  'P': 3, 'Pi1': 6,  'Pi2': 8},
@@ -25,8 +25,8 @@ SET_PARAMS = {
 }
 
 # 固定常量
-GRID_SIZE = 100  # 城市网格 100 x 100
-FC_EDGE_OFFSET = 25  # FC 距离网格边界的距离
+GRID_SIZE = 100                # 城市网格大小 100 x 100
+FC_EDGE_OFFSET = 25            # FC 距离网格边界的偏移
 CT_CAPACITY = 1500
 UV_CAPACITY = 500
 CT_FIXED_COST = 1500
@@ -34,76 +34,66 @@ UV_FIXED_COST = 500
 CDP_CAPACITY_LOW = int(0.2 * UV_CAPACITY)   # 100
 CDP_CAPACITY_HIGH = int(0.6 * UV_CAPACITY)  # 300
 
-# 客户服务时间窗参数
+# Customer 时间窗参数
 CUS_EARLIEST_START = 450
 CUS_LATEST_END = 2550
-CUS_SERVICE_DUR_MIN = 500
-CUS_SERVICE_DUR_MAX = 2100  # 确保 CX 结束 <= 2550
+CUS_SERVICE_MIN = 500
+CUS_SERVICE_MAX = 2150
 
 # 库存-需求 比例集合
 INVENTORY_RATIOS = [1.1, 1.2, 1.3, 1.4]
 
-# 车辆单位行驶成本系数
-COST_FACTOR = {
-    'CDP': 1.0,
-    'CT' : 1.2,
-    'UV' : 1.1
-}
+# 单位行驶成本系数
+COST_FACTOR = {'CDP': 1.0, 'CT': 1.2, 'UV': 1.1}
 
 
 # -----------------------------
-# 2. 工具函数：随机生成位置、需求、库存、时间窗等
+# 2. 工具函数
 # -----------------------------
 def sample_FC_positions(n_FC):
     """
-    FC 坐标固定：距离边界 25 单位。如果 n_FC=2，则按(25,25),(75,75)；
-               如果 n_FC=4，则按四个角 (25,25),(25,75),(75,25),(75,75)。
+    FC 坐标固定：距离边界 25 单位。
+    如果 n_FC=2，则用 (25,25), (75,75)。
+    如果 n_FC=4，则用四个角 (25,25), (25,75), (75,25), (75,75)。
+    返回时都四舍五入到两位小数。
     """
     if n_FC == 2:
-        return [(FC_EDGE_OFFSET, FC_EDGE_OFFSET),
-                (GRID_SIZE - FC_EDGE_OFFSET, GRID_SIZE - FC_EDGE_OFFSET)]
+        return [(round(FC_EDGE_OFFSET, 2), round(FC_EDGE_OFFSET, 2)),
+                (round(GRID_SIZE - FC_EDGE_OFFSET, 2), round(GRID_SIZE - FC_EDGE_OFFSET, 2))]
     elif n_FC == 4:
-        return [
-            (FC_EDGE_OFFSET, FC_EDGE_OFFSET),
-            (FC_EDGE_OFFSET, GRID_SIZE - FC_EDGE_OFFSET),
-            (GRID_SIZE - FC_EDGE_OFFSET, FC_EDGE_OFFSET),
-            (GRID_SIZE - FC_EDGE_OFFSET, GRID_SIZE - FC_EDGE_OFFSET)
-        ]
+        return [(round(FC_EDGE_OFFSET, 2), round(FC_EDGE_OFFSET, 2)),
+                (round(FC_EDGE_OFFSET, 2), round(GRID_SIZE - FC_EDGE_OFFSET, 2)),
+                (round(GRID_SIZE - FC_EDGE_OFFSET, 2), round(FC_EDGE_OFFSET, 2)),
+                (round(GRID_SIZE - FC_EDGE_OFFSET, 2), round(GRID_SIZE - FC_EDGE_OFFSET, 2))]
     else:
         raise ValueError(f"目前只支持 n_FC=2 或 4，但传入 {n_FC}")
 
-
-def sample_uniform_DC_positions(n_DC):
+def sample_uniform_positions(n, low, high):
     """
-    DC 坐标：在 [0,100]x[0,100] 区域内均匀随机分布。
+    在 [low, high] x [low, high] 区域里随机均匀采样 n 个点，
+    返回坐标列表并四舍五入到两位小数。
     """
-    xs = np.random.uniform(0, GRID_SIZE, size=n_DC)
-    ys = np.random.uniform(0, GRID_SIZE, size=n_DC)
-    return list(zip(xs.tolist(), ys.tolist()))
-
-
-def sample_uniform_CDP_positions(n_CDP):
-    """
-    CDP 坐标：在 [0,100]x[0,100] 区域内均匀随机分布。
-    """
-    xs = np.random.uniform(0, GRID_SIZE, size=n_CDP)
-    ys = np.random.uniform(0, GRID_SIZE, size=n_CDP)
-    return list(zip(xs.tolist(), ys.tolist()))
-
+    xs = np.random.uniform(low, high, size=n)
+    ys = np.random.uniform(low, high, size=n)
+    return [(round(xs[i], 2), round(ys[i], 2)) for i in range(n)]
 
 def sample_uniform_customer_positions(n_C):
     """
-    Customer 坐标：60% 在市中心 [25,75]x[25,75]，40% 在四个角的 25x25 区域（等概率分配到四个角）。
-    返回一个长度为 n_C 的 (x,y) 列表。
+    Customer 坐标方案：
+      - 60% 的点在市中心 [25,75] x [25,75]
+      - 40% 的点均匀分布在四个角的 25x25 子区域：
+          [0,25]x[0,25], [0,25]x[75,100], [75,100]x[75,100], [75,100]x[0,25]
+    返回长度为 n_C 的列表，每个 (x,y) 四舍五入到两位小数。
     """
     n_center = int(round(0.6 * n_C))
     n_corner = n_C - n_center
 
+    # 市中心部分
     center_x = np.random.uniform(FC_EDGE_OFFSET, GRID_SIZE - FC_EDGE_OFFSET, size=n_center)
     center_y = np.random.uniform(FC_EDGE_OFFSET, GRID_SIZE - FC_EDGE_OFFSET, size=n_center)
-    coords = [(center_x[i], center_y[i]) for i in range(n_center)]
+    coords = [(round(center_x[i], 2), round(center_y[i], 2)) for i in range(n_center)]
 
-    # 四个角落的子区域：分别是 [0,25]x[0,25]、[0,25]x[75,100]、[75,100]x[75,100]、[75,100]x[0,25]
+    # 四个角的子区域
     corner_regions = [
         (0, FC_EDGE_OFFSET, 0, FC_EDGE_OFFSET),
         (0, FC_EDGE_OFFSET, GRID_SIZE - FC_EDGE_OFFSET, GRID_SIZE),
@@ -111,114 +101,94 @@ def sample_uniform_customer_positions(n_C):
         (GRID_SIZE - FC_EDGE_OFFSET, GRID_SIZE, 0, FC_EDGE_OFFSET),
     ]
     for _ in range(n_corner):
-        # 随机选一个角
         idx = random.randint(0, 3)
         x_low, x_high, y_low, y_high = corner_regions[idx]
         x = random.uniform(x_low, x_high)
         y = random.uniform(y_low, y_high)
-        coords.append((x, y))
+        coords.append((round(x, 2), round(y, 2)))
 
-    # 打乱顺序，避免所有 center 在前，corner 在后
     random.shuffle(coords)
     return coords
 
-
 def sample_customer_time_windows(n_C):
     """
-    每个 Customer 有:
-      - 固定最早服务时间 a_i=450
-      - 服务时长 s_i ~ Uniform[500, 2100]
-      - 最晚允许开始时间 b_i = 2550 - s_i
-    返回一个列表 [(a_i, b_i, s_i)]，长度为 n_C
+    为每个客户生成时间窗 [450.00, end_time]：
+      - 先 s_i ~ Uniform[500,2150]
+      - end = 450 + s_i
+      - 如果 end > 2550，则强制 end = 2550
+    返回一个长度为 n_C 的列表，形如 [[450.00, end_i], ...]
     """
     tw_list = []
     for _ in range(n_C):
-        s_i = random.uniform(CUS_SERVICE_DUR_MIN, CUS_SERVICE_DUR_MAX)
-        # 由于 s_i 有可能取到较大值，导致 b_i < a_i，需要剪裁 s_i，确保 b_i >= a_i
-        if s_i > CUS_LATEST_END - CUS_EARLIEST_START:
-            s_i = CUS_LATEST_END - CUS_EARLIEST_START
-        a_i = CUS_EARLIEST_START
-        b_i = CUS_LATEST_END - s_i
-        tw_list.append((a_i, b_i, s_i))
+        s_i = random.uniform(CUS_SERVICE_MIN, CUS_SERVICE_MAX)
+        end = CUS_EARLIEST_START + s_i
+        if end > CUS_LATEST_END:
+            end = CUS_LATEST_END
+        tw_list.append([round(450.00, 2), round(end, 2)])
     return tw_list
-
 
 def sample_customer_demands(n_C, P):
     """
-    每个 Customer i 包含 P 个物品：
-      - 对于每个物品 p，需求 d_{i,p} ~ 从 {1,2,3,4} 中等概率抽取
-    返回一个形状为 (n_C, P) 的需求矩阵（Python 嵌套列表）
+    每个客户 i 有 P 件物品，需求 d_{i,p} ~ Uniform 从 {1,2,3,4}。
+    返回形状 (n_C, P) 的整型列表。
     """
     demands = np.random.choice([1, 2, 3, 4], size=(n_C, P))
     return demands.tolist()
 
-
 def sample_item_weights(P):
     """
-    每个物品 p 的单位体积/重量 q_p ~ 从 {5,10,15} 中等概率抽取
-    返回一个长度为 P 的列表 q = [q_1, q_2, ..., q_P]
+    每个物品 p 的体积/重量 q_p ~ 从 {5,10,15} 中等概率抽取。
+    返回长度为 P 的列表，整数即可。
     """
     return np.random.choice([5, 10, 15], size=P).tolist()
 
-
 def allocate_inventory_to_FCs(n_FC, demands, inv_ratio):
     """
-    1) 计算每个物品 p 的总体需求： sum_i d_{i,p}；
-    2) 根据 inv_ratio，计算总库存： total_inv_p = ceil(inv_ratio * total_demand_p)；
-    3) 将 total_inv_p 在 n_FC 个 FC 之间进行多项式分配，确保每个物品类别至少分配给两个 FC。
-       这里先用 np.random.multinomial，然后如果某个物品只分配给了 1 个 FC，就随机从其他 FC 增加 1 单位库存并扣除原 FC 中 1 单位，直到至少有两个 FC > 0。
-    返回一个形状为 (n_FC, P) 的库存矩阵（Python 嵌套列表）。
+    方法：
+      1. 计算每个物品 p 的总需求 sum_i d_{i,p}
+      2. 总库存 total_inventory_p = ceil(inv_ratio * 总需求_p)
+      3. 用 np.random.multinomial 在 n_FC 个 FC 之间分配 total_inventory_p，
+         确保至少有两个 FC>0（若不满足则做微调）。
+    返回：
+      inv_matrix (n_FC x P) 的整型列表，每行表示该 FC 每个物品的库存。
+
+    且断言 sum(inv_matrix[:, p]) == total_inventory_p
     """
-    demands_arr = np.array(demands)  # (n_C, P)
-    total_demand = demands_arr.sum(axis=0)  # 长度为 P
-
-    # 生成每个物品 p 的总库存
+    demands_arr = np.array(demands)
+    total_demand = demands_arr.sum(axis=0)  # 长度 P
     P = len(total_demand)
-    total_inventory = np.ceil(inv_ratio * total_demand).astype(int)  # 长度为 P
-
+    total_inventory = np.ceil(inv_ratio * total_demand).astype(int)
     inv_matrix = np.zeros((n_FC, P), dtype=int)
 
     for p in range(P):
-        # 如果 FC 数量小于 2，则无法保证“至少两个 FC”条件，但本问题 n_FC>=2
-        # 首先进行多项式分配
-        if total_inventory[p] >= n_FC:
-            # 按均匀概率
-            parts = np.random.multinomial(int(total_inventory[p]), [1.0 / n_FC] * n_FC)
+        Ti = int(total_inventory[p])
+        if Ti >= n_FC:
+            parts = np.random.multinomial(Ti, [1.0 / n_FC] * n_FC)
         else:
-            # 如果库存总数小于 FC 数量，先保证每个 FC 至少 0；多项式方式无法分出 1 个或 2 个 FC
-            # 这时先随机从 total_inventory[p] 中挑 few 个 FC 放 1 单位库存
             parts = np.zeros(n_FC, dtype=int)
-            chosen = np.random.choice(n_FC, int(total_inventory[p]), replace=False)
+            chosen = np.random.choice(n_FC, Ti, replace=False)
             parts[chosen] = 1
 
-        # 检查至少有两个 FC > 0
+        # 确保至少有两个 FC>0
         nonzero_fc = np.sum(parts > 0)
         if nonzero_fc < 2:
-            # 随机挑一个已分配 >0 库存的 FC，减少 1，把库存给另一个 FC
-            # 但如果本来只有一个 FC 得到库存，就把多余库存分给另一个 FC
             idx_nonzero = np.where(parts > 0)[0]
             idx_zero = np.where(parts == 0)[0]
             if len(idx_nonzero) == 0:
-                # 所有 FC 都为 0，先随机选两个 FC 赋 1
                 choose2 = np.random.choice(n_FC, 2, replace=False)
                 parts[choose2[0]] = 1
-                parts[choose2[1]] = total_inventory[p] - 1
+                parts[choose2[1]] = Ti - 1 if Ti > 1 else 1
             else:
-                # 仅有一个 FC 非零
                 idx_from = idx_nonzero[0]
-                if total_inventory[p] > 1:
+                if Ti > 1:
                     parts[idx_from] -= 1
-                    # 从空闲 FC 中随机选一个进行补充
                     idx_to = np.random.choice(idx_zero, 1)[0]
                     parts[idx_to] += 1
                 else:
-                    # total_inventory[p] = 1，直接把 1 库存分给第二个 FC
                     parts[idx_from] = 0
                     idx_two = np.random.choice(n_FC, 2, replace=False)
                     parts[idx_two[0]] = 1
-                    # 后面没有库存
-            # 再次确保至少两个 FC>0
-            # 如果还是不满足，就人为分配
+                    parts[idx_two[1]] = 0
             idx_nonzero = np.where(parts > 0)[0]
             if len(idx_nonzero) < 2:
                 all_idx = list(range(n_FC))
@@ -226,13 +196,15 @@ def allocate_inventory_to_FCs(n_FC, demands, inv_ratio):
                 parts[choose2[0]] = max(parts[choose2[0]], 1)
                 parts[choose2[1]] = max(parts[choose2[1]], 1)
 
+        # 确保分配总量等于 total_inventory[p]
+        assert parts.sum() == Ti, f"Inventory sum mismatch for item {p}: {parts.sum()} != {Ti}"
         inv_matrix[:, p] = parts
 
-    return inv_matrix.tolist()  # 转成 Python 嵌套列表
+    return inv_matrix.tolist()
 
 
 # -----------------------------
-# 3. 主函数：逐个 Set、每个 Set 生成 10 个实例
+# 3. 主函数：生成所有实例
 # -----------------------------
 def generate_all_instances(output_dir='instances'):
     os.makedirs(output_dir, exist_ok=True)
@@ -248,40 +220,33 @@ def generate_all_instances(output_dir='instances'):
         n_UV = params['Pi2']
 
         for inst_id in range(1, 11):
-            # 为确保可复现，用 set_id 和 inst_id 共同决定随机种子
-            seed =  1000 * set_id + inst_id
+            # 固定种子保证可复现
+            seed = 1000 * set_id + inst_id
             random.seed(seed)
             np.random.seed(seed)
 
-            # --------------- 3.1 生成各类节点的坐标 ---------------
-            fc_positions   = sample_FC_positions(n_FC)
-            dc_positions   = sample_uniform_DC_positions(n_DC)
-            cdp_positions  = sample_uniform_CDP_positions(n_CDP)
+            # 3.1 生成各节点坐标
+            fc_positions = sample_FC_positions(n_FC)
+            dc_positions = sample_uniform_positions(n_DC, 0, GRID_SIZE)
+            cdp_positions = sample_uniform_positions(n_CDP, 0, GRID_SIZE)
             cust_positions = sample_uniform_customer_positions(n_C)
 
-            # --------------- 3.2 生成 Customer 时间窗、需求 ---------------
-            cust_time_windows = sample_customer_time_windows(n_C)  # [(a_i,b_i,s_i), ...]
-            cust_demands = sample_customer_demands(n_C, P)        # [[d_{i,1},...,d_{i,P}], ...]
+            # 3.2 生成客户时间窗 & 需求
+            cust_time_windows = sample_customer_time_windows(n_C)
+            cust_demands = sample_customer_demands(n_C, P)
 
-            # --------------- 3.3 生成物品重量 q_p ---------------
-            item_weights = sample_item_weights(P)  # [q_1, q_2, ..., q_P]
-
-            # --------------- 3.4 基于 demands 计算库存 ---------------
+            # 3.3 生成物品重量、库存
+            item_weights = sample_item_weights(P)
             inv_ratio = random.choice(INVENTORY_RATIOS)
             fc_inventory = allocate_inventory_to_FCs(n_FC, cust_demands, inv_ratio)
-            # fc_inventory 是 (n_FC x P) 的矩阵
 
-            # --------------- 3.5 生成 CDP 容量 Q_k ---------------
-            cdp_capacities = []
-            for _ in range(n_CDP):
-                qk = random.randint(CDP_CAPACITY_LOW, CDP_CAPACITY_HIGH)
-                cdp_capacities.append(qk)
+            # 3.4 生成 CDP 容量
+            cdp_capacities = [random.randint(CDP_CAPACITY_LOW, CDP_CAPACITY_HIGH) for _ in range(n_CDP)]
 
-            # --------------- 3.6 整理、打包实例信息 ----------------
+            # 3.5 打包实例
             instance_data = {
                 'set_id': set_id,
                 'inst_id': inst_id,
-                # 车辆信息
                 'vehicles': {
                     'CT': {
                         'count': n_CT,
@@ -296,62 +261,52 @@ def generate_all_instances(output_dir='instances'):
                         'unit_cost_factor': COST_FACTOR['UV']
                     }
                 },
-                # 物品相关
                 'P': P,
-                'item_weights': item_weights,   # q_p 列表
-                # 库存-需求 比例
-                'inventory_ratio': inv_ratio,
-                # FC 节点列表
+                'item_weights': item_weights,
+                'inventory_ratio': round(inv_ratio, 2),
                 'FCs': [
                     {
                         'id': f'FC{j+1}',
-                        'x': float(fc_positions[j][0]),
-                        'y': float(fc_positions[j][1]),
-                        'time_window': [0, 3000],
-                        'inventory': fc_inventory[j]  # 长度为 P 的列表
+                        'x': fc_positions[j][0],
+                        'y': fc_positions[j][1],
+                        'time_window': [0.00, 3000.00],
+                        'inventory': fc_inventory[j]
                     }
                     for j in range(n_FC)
                 ],
-                # DC 节点列表
                 'DCs': [
                     {
                         'id': f'DC{j+1}',
-                        'x': float(dc_positions[j][0]),
-                        'y': float(dc_positions[j][1]),
-                        'time_window': [300, 2700]
+                        'x': dc_positions[j][0],
+                        'y': dc_positions[j][1],
+                        'time_window': [300.00, 2700.00]
                     }
                     for j in range(n_DC)
                 ],
-                # CDP 节点列表
                 'CDPs': [
                     {
                         'id': f'CDP{j+1}',
-                        'x': float(cdp_positions[j][0]),
-                        'y': float(cdp_positions[j][1]),
-                        'time_window': [0, 3000],
+                        'x': cdp_positions[j][0],
+                        'y': cdp_positions[j][1],
+                        'time_window': [0.00, 3000.00],
                         'capacity': cdp_capacities[j]
                     }
                     for j in range(n_CDP)
                 ],
-                # Customer 节点列表
                 'Customers': [
                     {
                         'id': f'C{j+1}',
-                        'x': float(cust_positions[j][0]),
-                        'y': float(cust_positions[j][1]),
-                        'time_window': [cust_time_windows[j][0], cust_time_windows[j][1]],
-                        'service_duration': cust_time_windows[j][2],
-                        'demand': cust_demands[j]  # 长度为 P 的列表
+                        'x': cust_positions[j][0],
+                        'y': cust_positions[j][1],
+                        'time_window': cust_time_windows[j],
+                        'demand': cust_demands[j]
                     }
                     for j in range(n_C)
                 ]
             }
 
-            # --------------- 3.7 写入 JSON 文件 ---------------
-            filename = os.path.join(
-                output_dir,
-                f'instance_set{set_id}_{inst_id}.json'
-            )
+            # 3.6 写入 JSON
+            filename = os.path.join(output_dir, f'instance_set{set_id}_{inst_id}.json')
             with open(filename, 'w', encoding='utf-8') as f:
                 json.dump(instance_data, f, ensure_ascii=False, indent=2)
 
@@ -360,6 +315,44 @@ def generate_all_instances(output_dir='instances'):
     print("==> 所有实例生成完毕，共 10x10 = 100 个 JSON 文件。")
 
 
-if __name__ == '__main__':
-    generate_all_instances()
+def plot_instance_nodes(instance_path):
+    """
+    读取给定路径的实例 JSON 文件，并绘制其中的 FC、DC、CDP、Customer 节点位置。
+    """
+    with open(instance_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
 
+    # 提取各类节点坐标
+    fc_coords = [(fc['x'], fc['y']) for fc in data['FCs']]
+    dc_coords = [(dc['x'], dc['y']) for dc in data['DCs']]
+    cdp_coords = [(cdp['x'], cdp['y']) for cdp in data['CDPs']]
+    cust_coords = [(c['x'], c['y']) for c in data['Customers']]
+
+    # 分别拆分成 x, y 列表
+    fc_x, fc_y = zip(*fc_coords) if fc_coords else ([], [])
+    dc_x, dc_y = zip(*dc_coords) if dc_coords else ([], [])
+    cdp_x, cdp_y = zip(*cdp_coords) if cdp_coords else ([], [])
+    cust_x, cust_y = zip(*cust_coords) if cust_coords else ([], [])
+
+    plt.figure(figsize=(8, 8))
+    # 绘制
+    plt.scatter(fc_x, fc_y, marker='s', label='FC (Fulfillment Center)')
+    plt.scatter(dc_x, dc_y, marker='D', label='DC (Distribution Center)')
+    plt.scatter(cdp_x, cdp_y, marker='^', label='CDP')
+    plt.scatter(cust_x, cust_y, marker='o', label='Customer')
+
+    plt.title(f"节点分布：实例 {data['set_id']}-{data['inst_id']}")
+    plt.xlabel("X 坐标")
+    plt.ylabel("Y 坐标")
+    plt.xlim(0, 100)
+    plt.ylim(0, 100)
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+
+if __name__ == '__main__':
+    # generate_all_instances()
+
+    # 示例：绘制实例文件 "instances/instance_set1_1.json" 的节点位置
+    plot_instance_nodes("instances/instance_set7_10.json")
